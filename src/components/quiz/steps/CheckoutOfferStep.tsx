@@ -38,11 +38,11 @@ export const CheckoutOfferStep: React.FC = () => {
         valor promocional:
       </h2>
 
-      <div className="w-full max-w-sm mb-8">
+      <div className="w-full max-w-xs mb-8">
         <img
-          src="/assets/preco-1990.png"
-          alt="De R$297 por apenas R$19,90"
-          className="w-full h-auto"
+          src="/assets/preco-euro.svg"
+          alt="De 97 € por apenas 19,90 €"
+          className="w-full h-auto drop-shadow-sm"
         />
       </div>
 

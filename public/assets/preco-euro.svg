@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" width="100%" height="100%">
+  <!-- Top: DE € 97 -->
+  <text x="140" y="45" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="900" font-size="34" fill="#000000" text-anchor="end">DE</text>
+  <text x="155" y="45" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="900" font-size="34" fill="#ff0000" text-anchor="start">€ 97</text>
+  <!-- Red Strikethrough line -->
+  <line x1="145" y1="34" x2="265" y2="34" stroke="#ff0000" stroke-width="4" stroke-linecap="round" />
+
+  <!-- Middle: POR APENAS -->
+  <text x="200" y="80" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="400" font-size="24" fill="#2d3748" text-anchor="middle" letter-spacing="3">POR APENAS</text>
+
+  <!-- Green horizontal divider bar -->
+  <line x1="50" y1="95" x2="350" y2="95" stroke="#00a859" stroke-width="3.5" stroke-linecap="round" />
+
+  <!-- Bottom Price: € 19,90 -->
+  <text x="105" y="152" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="900" font-size="28" fill="#00a859" text-anchor="end">€</text>
+  <text x="115" y="160" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="900" font-size="78" fill="#00a859" text-anchor="start">19,90</text>
+</svg>
