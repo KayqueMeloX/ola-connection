@@ -161,12 +161,12 @@ function QuizApp() {
 
         {currentStep === "frontDuplo" && <CheckoutOfferStep />}
 
-        {/* Footer Support/Wiapy Endorsement Badge */}
+        {/* Footer Support/Hotmart Endorsement Badge */}
         <div className="w-full mt-4 pt-3">
           <img
-            src="/assets/rodape-apoio-wiapy.png"
-            alt="Apoio: Mãe Célia de Oxossi, Terreiro Cavaleiros de Aruanda - Salvador/BA, Wiapy"
-            className="w-full max-w-xs mx-auto object-contain"
+            src="/assets/rodape-apoio-hotmart.png"
+            alt="Apoio: Mãe Célia de Oxossi, Terreiro Cavaleiros de Umbanda - Lisboa/PT, Hotmart"
+            className="w-full max-w-sm mx-auto object-contain"
           />
         </div>
 

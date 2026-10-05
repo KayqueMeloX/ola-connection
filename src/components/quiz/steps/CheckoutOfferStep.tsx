@@ -121,9 +121,9 @@ export const CheckoutOfferStep: React.FC = () => {
 
       <div className="w-full max-w-sm mb-6">
         <img
-          src="/assets/wiapy-secure-checkout.png"
-          alt="Ambiente 100% seguro - Visa, Mastercard, Elo, PIX, AMEX, Hiper, Boleto - Wiapy"
-          className="w-full h-auto"
+          src="/assets/hotmart-secure-checkout.png"
+          alt="Ambiente 100% seguro - Mastercard, Visa, Elo, MB WAY, AMEX, Hiper - Hotmart"
+          className="w-full h-auto drop-shadow-sm"
         />
       </div>
     </div>
