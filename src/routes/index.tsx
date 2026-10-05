@@ -55,7 +55,6 @@ function QuizApp() {
   const handleSelectAnswer = (index: number) => {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
-    setShowResult(true);
 
     if (index === quizQuestions[currentQuestionIndex].correctAnswer) {
       setScore((prev) => prev + 1);
@@ -64,21 +63,22 @@ function QuizApp() {
     setTimeout(() => {
       setPreviousBalance(spiritualBalance);
       setSpiritualBalance((prev) => prev + 20);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
 
       if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
         setSelectedAnswer(null);
-        setShowResult(false);
       } else {
         setCurrentStep("analyzing");
       }
-    }, 850);
+    }, 450);
   };
 
   const handleGoToStep = (step: string, qIndex?: number) => {
     setCurrentStep(step as StepType);
     setSelectedAnswer(null);
-    setShowResult(false);
     if (step === "quiz" && qIndex !== undefined) {
       setCurrentQuestionIndex(qIndex);
       if (!selectedRole) setSelectedRole("iniciante");
@@ -130,7 +130,6 @@ function QuizApp() {
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={quizQuestions.length}
             selectedAnswer={selectedAnswer}
-            showResult={showResult}
             onSelectAnswer={handleSelectAnswer}
           />
         )}
