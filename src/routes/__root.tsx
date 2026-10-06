@@ -165,6 +165,44 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    const pageTitle = "Mapa Mental da Umbanda - Quiz";
+    document.title = pageTitle;
+
+    const enforceFaviconAndTitle = () => {
+      if (document.title !== pageTitle) {
+        document.title = pageTitle;
+      }
+
+      const iconUrl = "/favicon.png?v=" + Date.now();
+      let iconLink = document.querySelector("link[rel='icon']") as HTMLLinkElement | null;
+      if (!iconLink) {
+        iconLink = document.createElement("link");
+        iconLink.rel = "icon";
+        iconLink.type = "image/png";
+        document.head.appendChild(iconLink);
+      }
+      if (!iconLink.href.includes("favicon.png")) {
+        iconLink.href = iconUrl;
+      }
+
+      let shortcutLink = document.querySelector("link[rel='shortcut icon']") as HTMLLinkElement | null;
+      if (!shortcutLink) {
+        shortcutLink = document.createElement("link");
+        shortcutLink.rel = "shortcut icon";
+        shortcutLink.type = "image/png";
+        document.head.appendChild(shortcutLink);
+      }
+      if (!shortcutLink.href.includes("favicon.png")) {
+        shortcutLink.href = iconUrl;
+      }
+    };
+
+    enforceFaviconAndTitle();
+    const interval = setInterval(enforceFaviconAndTitle, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
