@@ -111,6 +111,7 @@ export const HowToReceiveStep: React.FC<HowToReceiveStepProps> = ({ onNext }) =>
               ref={videoRef1}
               src="https://player.vimeo.com/video/1232523229?badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
+              loading="lazy"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               className="absolute top-0 left-0 w-full h-full"
@@ -132,6 +133,7 @@ export const HowToReceiveStep: React.FC<HowToReceiveStepProps> = ({ onNext }) =>
               ref={videoRef2}
               src="https://player.vimeo.com/video/1180197942?badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
+              loading="lazy"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               className="absolute top-0 left-0 w-full h-full"

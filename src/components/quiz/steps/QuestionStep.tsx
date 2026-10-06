@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Volume2 } from "lucide-react";
 import { QuizQuestion } from "@/data/quiz-data";
 import { cn } from "@/lib/utils";
 
 interface QuestionStepProps {
   question: QuizQuestion;
+  nextQuestionImage?: string;
   questionNumber: number;
   totalQuestions: number;
   selectedAnswer: number | null;
@@ -13,9 +14,18 @@ interface QuestionStepProps {
 
 export const QuestionStep: React.FC<QuestionStepProps> = ({
   question,
+  nextQuestionImage,
   selectedAnswer,
   onSelectAnswer,
 }) => {
+  // Preload next question image for instant transitions
+  useEffect(() => {
+    if (nextQuestionImage) {
+      const img = new Image();
+      img.src = nextQuestionImage;
+    }
+  }, [nextQuestionImage]);
+
   return (
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Pai Oxalá guide header */}
@@ -24,6 +34,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
           <img
             src="/assets/personagem-guia-3d-C5LUUTbc.png"
             alt="Pai Oxalá"
+            decoding="async"
             className="w-24 h-24 object-contain rounded-full shadow-lg"
           />
           <div className="absolute -bottom-1 -right-1 bg-primary rounded-full p-1.5 shadow-md">
@@ -45,6 +56,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
             <img
               src={question.questionImage}
               alt="Ilustração da pergunta"
+              decoding="async"
               className="w-80 h-80 object-contain"
             />
           </div>
@@ -101,7 +113,12 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
               )}
               {opt.image && !opt.emoji && (
                 <div className="w-16 h-16 shrink-0 flex items-center justify-center">
-                  <img src={opt.image} alt={opt.text} className="w-full h-full object-contain" />
+                  <img
+                    src={opt.image}
+                    alt={opt.text}
+                    decoding="async"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               )}
               <span className="text-foreground flex-1 text-lg">{opt.text}</span>

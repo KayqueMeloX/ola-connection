@@ -114,6 +114,7 @@ function QuizApp() {
         {currentStep === "quiz" && (
           <QuestionStep
             question={quizQuestions[currentQuestionIndex]}
+            nextQuestionImage={quizQuestions[currentQuestionIndex + 1]?.questionImage}
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={quizQuestions.length}
             selectedAnswer={selectedAnswer}

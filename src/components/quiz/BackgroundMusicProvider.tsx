@@ -14,35 +14,43 @@ export const BackgroundMusicProvider: React.FC<{ children: React.ReactNode }> = 
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const audio = new Audio("/audio/ori-background.mp3");
-    audio.loop = true;
-    audio.volume = 0.3;
-    audioRef.current = audio;
-
     let hasStarted = false;
+
     const startAudio = () => {
       if (hasStarted) return;
-      audio
+      hasStarted = true;
+
+      // Lazy instantiate audio only on first interaction to avoid blocking initial network
+      if (!audioRef.current) {
+        const audio = new Audio("/audio/ori-background.mp3");
+        audio.loop = true;
+        audio.volume = 0.25;
+        audio.preload = "auto";
+        audioRef.current = audio;
+      }
+
+      audioRef.current
         .play()
         .then(() => {
-          hasStarted = true;
           userInteractedRef.current = true;
           setIsPlaying(true);
-          document.removeEventListener("click", startAudio);
-          document.removeEventListener("touchstart", startAudio);
-          document.removeEventListener("pointerdown", startAudio);
         })
         .catch(() => {});
+
+      document.removeEventListener("click", startAudio);
+      document.removeEventListener("touchstart", startAudio);
+      document.removeEventListener("pointerdown", startAudio);
     };
 
-    startAudio();
-    document.addEventListener("click", startAudio);
-    document.addEventListener("touchstart", startAudio);
-    document.addEventListener("pointerdown", startAudio);
+    document.addEventListener("click", startAudio, { passive: true, once: true });
+    document.addEventListener("touchstart", startAudio, { passive: true, once: true });
+    document.addEventListener("pointerdown", startAudio, { passive: true, once: true });
 
     return () => {
-      audio.pause();
-      audio.src = "";
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
       document.removeEventListener("click", startAudio);
       document.removeEventListener("touchstart", startAudio);
       document.removeEventListener("pointerdown", startAudio);
