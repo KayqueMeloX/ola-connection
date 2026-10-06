@@ -10,7 +10,6 @@ import { OfferIntroStep } from "@/components/quiz/steps/OfferIntroStep";
 import { HowToReceiveStep } from "@/components/quiz/steps/HowToReceiveStep";
 import { BonusStep } from "@/components/quiz/steps/BonusStep";
 import { CheckoutOfferStep } from "@/components/quiz/steps/CheckoutOfferStep";
-import { DevNavigation } from "@/components/quiz/DevNavigation";
 import { quizQuestions } from "@/data/quiz-data";
 
 export const Route = createFileRoute("/")({
@@ -74,18 +73,6 @@ function QuizApp() {
         setCurrentStep("analyzing");
       }
     }, 450);
-  };
-
-  const handleGoToStep = (step: string, qIndex?: number) => {
-    setCurrentStep(step as StepType);
-    setSelectedAnswer(null);
-    if (step === "quiz" && qIndex !== undefined) {
-      setCurrentQuestionIndex(qIndex);
-      if (!selectedRole) setSelectedRole("iniciante");
-    }
-    if (step === "intro") {
-      setCurrentQuestionIndex(0);
-    }
   };
 
   const calculateCurrentStepNumber = () => {
@@ -168,14 +155,6 @@ function QuizApp() {
             className="w-full max-w-sm mx-auto object-contain"
           />
         </div>
-
-        {/* Dev navigation menu (Press / or click floating compass) */}
-        <DevNavigation
-          currentStep={currentStep}
-          currentQuestion={currentQuestionIndex}
-          totalQuestions={quizQuestions.length}
-          onGoToStep={handleGoToStep}
-        />
       </QuizLayout>
     </BackgroundMusicProvider>
   );
