@@ -105,7 +105,7 @@ export const CheckoutOfferStep: React.FC = () => {
       </div>
 
       <a
-        href="https://pay.wiapy.com/ANIyBmA8dQ"
+        href="https://pay.hotmart.com/G106783622L?checkoutMode=10"
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => pauseForVideo()}
