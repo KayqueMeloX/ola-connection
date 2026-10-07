@@ -38,7 +38,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
               src={question.questionImage}
               alt="Ilustração da pergunta"
               decoding="async"
-              className="h-32 sm:h-36 md:h-44 w-auto max-w-[260px] object-contain drop-shadow-md"
+              className="h-44 sm:h-52 md:h-60 w-auto max-w-[320px] object-contain drop-shadow-md"
             />
           </div>
         )}
