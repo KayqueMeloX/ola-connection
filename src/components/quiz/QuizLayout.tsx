@@ -34,13 +34,13 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Sticky Top Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-md border-b border-border/40">
-        {isOfferPage ? (
-          <div className="w-full max-w-lg mx-auto px-4 pt-2.5 pb-2">
+      {isOfferPage ? (
+        <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-transparent pt-3 px-4">
+          <div className="w-full max-w-lg mx-auto pointer-events-auto">
             <a
               href={CHECKOUT_URL}
               onClick={onCheckoutClick}
-              className="w-full py-3.5 sm:py-4 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-between gap-3 cursor-pointer"
+              className="w-full py-3.5 sm:py-4 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-between gap-3 cursor-pointer"
             >
               <div className="flex-1 flex flex-col items-center justify-center text-center leading-tight">
                 <span className="font-extrabold text-sm sm:text-base tracking-wide uppercase drop-shadow-sm">
@@ -53,41 +53,41 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
               <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 drop-shadow-sm" strokeWidth={2.5} />
             </a>
           </div>
-        ) : (
-          <>
-            {showProgress && spiritualBalance > 0 && (
-              <div className="flex justify-center pt-3">
-                <SpiritualBalance balance={spiritualBalance} previousBalance={previousBalance} />
-              </div>
-            )}
+        </div>
+      ) : (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-md border-b border-border/40">
+          {showProgress && spiritualBalance > 0 && (
+            <div className="flex justify-center pt-3">
+              <SpiritualBalance balance={spiritualBalance} previousBalance={previousBalance} />
+            </div>
+          )}
 
-            {!hideLogo && (
-              <div className="flex justify-center py-3 px-4">
-                <div className="animate-bounce-soft">
-                  <QuizHeader />
-                </div>
+          {!hideLogo && (
+            <div className="flex justify-center py-3 px-4">
+              <div className="animate-bounce-soft">
+                <QuizHeader />
               </div>
-            )}
+            </div>
+          )}
 
-            {showProgress && (
-              <div className="flex justify-center pb-3 px-4">
-                <div className="w-full max-w-xs relative">
-                  <div className="w-full h-4 bg-muted/50 rounded-full overflow-hidden relative">
-                    <div
-                      className="absolute top-0 h-full bg-primary rounded-full transition-all duration-500 ease-out flex items-center justify-center"
-                      style={{ width: `${barWidth}%`, left: `${(100 - barWidth) / 2}%` }}
-                    >
-                      <span className="text-primary-foreground font-bold text-[10px] whitespace-nowrap drop-shadow-sm">
-                        {stepPercent}%
-                      </span>
-                    </div>
+          {showProgress && (
+            <div className="flex justify-center pb-3 px-4">
+              <div className="w-full max-w-xs relative">
+                <div className="w-full h-4 bg-muted/50 rounded-full overflow-hidden relative">
+                  <div
+                    className="absolute top-0 h-full bg-primary rounded-full transition-all duration-500 ease-out flex items-center justify-center"
+                    style={{ width: `${barWidth}%`, left: `${(100 - barWidth) / 2}%` }}
+                  >
+                    <span className="text-primary-foreground font-bold text-[10px] whitespace-nowrap drop-shadow-sm">
+                      {stepPercent}%
+                    </span>
                   </div>
                 </div>
               </div>
-            )}
-          </>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Main Container */}
       <div
