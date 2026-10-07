@@ -135,7 +135,7 @@ export const UnifiedOfferStep: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
       {/* 1. Headline de Alto Impacto */}
-      <div className="w-full mb-8 pt-1">
+      <div className="w-full mb-8 pt-10 sm:pt-14 mt-2">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-3">
           <Sparkles className="w-4 h-4 text-accent animate-pulse" />
           <span className="text-xs font-black text-primary uppercase tracking-wider">
@@ -232,26 +232,32 @@ export const UnifiedOfferStep: React.FC = () => {
           </h3>
         </div>
         <p className="text-sm sm:text-base text-muted-foreground mb-6">
-          Mais de <span className="line-through font-bold text-red-500">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
+          Mais de <span className="line-through font-bold text-red-500 text-base">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
         </p>
 
-        <div className="w-full max-w-md mx-auto space-y-5 mb-8">
+        <div className="w-full max-w-md mx-auto space-y-6 mb-8">
           {bonuses.map((bonus, idx) => (
-            <div key={idx} className="w-full bg-card rounded-2xl p-3 border border-border shadow-md text-left">
+            <div key={idx} className="w-full bg-card rounded-2xl p-3.5 border border-border shadow-lg text-left">
               <img
                 src={bonus.src}
                 alt={bonus.title}
                 className="w-full h-auto rounded-xl shadow mb-3 border border-border/50"
               />
-              <div className="flex items-center justify-between px-1">
-                <span className="text-xs sm:text-sm font-bold text-foreground flex-1 pr-2">
-                  {bonus.title}
-                </span>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="text-xs sm:text-sm text-red-500 font-bold line-through">{bonus.normalPrice}</span>
-                  <span className="text-xs sm:text-sm font-black text-green-600 bg-green-500/15 px-2.5 py-0.5 rounded-full border border-green-500/30">
-                    GRÁTIS
+              <p className="text-sm sm:text-base font-black text-foreground mb-3 px-1 leading-snug">
+                {bonus.title}
+              </p>
+              
+              {/* Barra de Preço em Destaque */}
+              <div className="pt-3 border-t border-border/70 flex items-center justify-between gap-2 px-1">
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase font-bold text-muted-foreground">Valor individual:</span>
+                  <span className="text-base sm:text-lg font-black text-red-500 line-through decoration-2">
+                    {bonus.normalPrice}
                   </span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md uppercase tracking-wider">
+                  <Check className="w-4 h-4 text-white stroke-[3]" />
+                  <span>100% GRÁTIS</span>
                 </div>
               </div>
             </div>
