@@ -232,7 +232,7 @@ export const UnifiedOfferStep: React.FC = () => {
           </h3>
         </div>
         <p className="text-sm sm:text-base text-muted-foreground mb-6">
-          Mais de <span className="line-through font-bold">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
+          Mais de <span className="line-through font-bold text-red-500">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
         </p>
 
         <div className="w-full max-w-md mx-auto space-y-5 mb-8">
@@ -248,8 +248,8 @@ export const UnifiedOfferStep: React.FC = () => {
                   {bonus.title}
                 </span>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="text-xs text-muted-foreground line-through">{bonus.normalPrice}</span>
-                  <span className="text-xs font-black text-green-600 bg-green-500/15 px-2 py-0.5 rounded-full">
+                  <span className="text-xs sm:text-sm text-red-500 font-bold line-through">{bonus.normalPrice}</span>
+                  <span className="text-xs sm:text-sm font-black text-green-600 bg-green-500/15 px-2.5 py-0.5 rounded-full border border-green-500/30">
                     GRÁTIS
                   </span>
                 </div>
@@ -323,7 +323,9 @@ export const UnifiedOfferStep: React.FC = () => {
 
         {/* Preço */}
         <div className="my-6 p-4 rounded-2xl bg-muted/40 border border-border">
-          <p className="text-sm text-muted-foreground line-through mb-1">De: € 67,00</p>
+          <p className="text-sm text-muted-foreground mb-1">
+            De: <span className="line-through text-red-500 font-bold">€ 67,00</span>
+          </p>
           <div className="flex items-baseline justify-center gap-2">
             <span className="text-sm font-bold text-foreground">Por apenas</span>
             <span className="text-4xl sm:text-5xl font-black text-primary">€ 19,90</span>
