@@ -28,17 +28,17 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   return (
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Question Text */}
-      <div className={cn("text-center px-1", question.questionImage ? "mb-2.5" : "mb-5 sm:mb-6 pt-2")}>
+      <div className={cn("text-center px-1", question.questionImage ? "mb-2" : "mb-5 sm:mb-6 pt-1")}>
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-snug">
           {question.question}
         </h2>
         {question.questionImage && (
-          <div className="flex justify-center mt-2.5 mb-1.5">
+          <div className="flex justify-center mt-2 mb-1">
             <img
               src={question.questionImage}
               alt="Ilustração da pergunta"
               decoding="async"
-              className="h-36 sm:h-40 md:h-48 w-auto max-w-[270px] object-contain drop-shadow-md"
+              className="h-28 sm:h-32 md:h-36 w-auto max-w-[240px] object-contain drop-shadow-md"
             />
           </div>
         )}
@@ -47,8 +47,8 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
       {/* Options list */}
       <div
         className={cn(
-          "flex flex-col mb-6",
-          question.questionImage ? "gap-2.5 sm:gap-3" : "gap-4 sm:gap-4.5"
+          "flex flex-col mb-4",
+          question.questionImage ? "gap-3 sm:gap-3.5" : "gap-4 sm:gap-4.5"
         )}
       >
         {question.options.map((opt, idx) => {
@@ -65,7 +65,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 onClick={() => onSelectAnswer(idx)}
                 disabled={selectedAnswer !== null}
                 className={cn(
-                  "w-full py-4 sm:py-4.5 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300",
+                  "w-full py-3.5 sm:py-4 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300",
                   "flex items-center justify-center gap-3",
                   solidBg,
                   selectedAnswer === null && "hover:scale-[1.02] active:scale-[0.99]"

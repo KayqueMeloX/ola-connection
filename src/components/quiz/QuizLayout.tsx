@@ -26,15 +26,15 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm shadow-sm">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm shadow-sm border-b border-border/30">
         {showProgress && spiritualBalance > 0 && (
-          <div className="flex justify-center pt-3">
+          <div className="flex justify-center pt-2">
             <SpiritualBalance balance={spiritualBalance} previousBalance={previousBalance} />
           </div>
         )}
 
         {!hideLogo && (
-          <div className="flex justify-center py-4 px-4">
+          <div className="flex justify-center py-2 px-4">
             <div className="animate-bounce-soft">
               <QuizHeader />
             </div>
@@ -42,14 +42,14 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
         )}
 
         {showProgress && (
-          <div className="flex justify-center pb-3 px-4">
+          <div className="flex justify-center pb-2 px-4">
             <div className="w-full max-w-xs relative">
-              <div className="w-full h-4 bg-muted/50 rounded-full overflow-hidden relative">
+              <div className="w-full h-3.5 bg-muted/50 rounded-full overflow-hidden relative">
                 <div
                   className="absolute top-0 h-full bg-primary rounded-full transition-all duration-500 ease-out flex items-center justify-center"
                   style={{ width: `${barWidth}%`, left: `${(100 - barWidth) / 2}%` }}
                 >
-                  <span className="text-primary-foreground font-bold text-[10px] whitespace-nowrap drop-shadow-sm">
+                  <span className="text-primary-foreground font-bold text-[9px] whitespace-nowrap drop-shadow-sm">
                     {stepPercent}%
                   </span>
                 </div>
@@ -59,7 +59,7 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
         )}
       </div>
 
-      <div className="flex-1 flex flex-col items-center px-4 py-8 max-w-lg mx-auto w-full pt-52 md:pt-44">
+      <div className="flex-1 flex flex-col items-center px-4 max-w-lg mx-auto w-full pt-32 sm:pt-36 md:pt-40 pb-4">
         {children}
       </div>
     </div>
