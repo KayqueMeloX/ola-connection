@@ -351,11 +351,24 @@ export const UnifiedOfferStep: React.FC = () => {
 
       {/* 5. Caixa de Oferta Final / Preço */}
       <div className="w-full bg-gradient-to-b from-card via-card to-primary/5 rounded-3xl p-6 sm:p-8 border-2 border-primary shadow-2xl mb-8">
-        {/* Temporizador de Escassez / Urgência */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 mb-3">
-          <Timer className="w-4 h-4 animate-pulse" />
-          <span className="text-xs font-black tracking-wide uppercase">
-            DESCONTO RESERVADO: <span className="font-mono text-sm">{formatTimer(timeLeft)}</span>
+        {/* Temporizador de Escassez / Urgência em Destaque Vermelho */}
+        <div
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl mb-4 font-black tracking-wide shadow-md animate-pulse"
+          style={{
+            backgroundColor: "rgba(239, 68, 68, 0.12)",
+            color: "#ef4444",
+            border: "1.5px solid rgba(239, 68, 68, 0.45)",
+          }}
+        >
+          <Timer className="w-5 h-5 shrink-0" style={{ color: "#ef4444" }} />
+          <span className="text-xs sm:text-sm font-black uppercase tracking-wider flex items-center">
+            DESCONTO RESERVADO POR:
+            <span
+              className="font-mono text-sm sm:text-base px-2 py-0.5 rounded-lg font-black ml-1.5 text-white shadow-sm"
+              style={{ backgroundColor: "#ef4444" }}
+            >
+              {formatTimer(timeLeft)}
+            </span>
           </span>
         </div>
 
