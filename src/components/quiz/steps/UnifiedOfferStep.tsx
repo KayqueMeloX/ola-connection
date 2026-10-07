@@ -10,16 +10,16 @@ const offerItems = [
   { text: "Pagamento Único", isCore: true },
   { text: "Acesso Vitalício ao Aplicativo", isCore: true },
   { text: "60 dias de Garantia", isCore: true },
-  { text: "Bônus 1: Formação Fundamental de Doutrina Umbandista", isCore: false },
-  { text: "Bônus 2: Audiobook Experience - Imersão Guiada de todo o conteúdo", isCore: false },
-  { text: "Bônus 3: Biblioteca Hierárquica dos Tronos e Regências Divinas", isCore: false },
-  { text: "Bônus 4: Atlas Energético das 95 Ervas Sagradas", isCore: false },
-  { text: "Bônus 5: Manual Vibracional do Reino Mineral e Pedras Sagradas", isCore: false },
-  { text: "Bônus 6: Ritual Guiado de Defumação para Limpeza e Proteção Espiritual", isCore: false },
-  { text: "Bônus 7: Compêndio Estruturado de Práticas Ritualísticas Conscientes", isCore: false },
-  { text: "Bônus 8: Coletânea Curada de Pontos Cantados Essenciais", isCore: false },
-  { text: "Bônus 9: Coleção Oficial de Iconografia Sagrada da Umbanda", isCore: false },
-  { text: "Bônus 10: Círculo Fechado de Estudos Umbandistas - Whatsapp", isCore: false },
+  { text: "Bônus 1: Formação Fundamental de Doutrina Umbandista", isCore: false, normalPrice: "€ 27,00" },
+  { text: "Bônus 2: Audiobook Experience - Imersão Guiada de todo o conteúdo", isCore: false, normalPrice: "€ 19,00" },
+  { text: "Bônus 3: Biblioteca Hierárquica dos Tronos e Regências Divinas", isCore: false, normalPrice: "€ 17,00" },
+  { text: "Bônus 4: Atlas Energético das 95 Ervas Sagradas", isCore: false, normalPrice: "€ 22,00" },
+  { text: "Bônus 5: Manual Vibracional do Reino Mineral e Pedras Sagradas", isCore: false, normalPrice: "€ 15,00" },
+  { text: "Bônus 6: Ritual Guiado de Defumação para Limpeza e Proteção Espiritual", isCore: false, normalPrice: "€ 19,00" },
+  { text: "Bônus 7: Compêndio Estruturado de Práticas Ritualísticas Conscientes", isCore: false, normalPrice: "€ 14,00" },
+  { text: "Bônus 8: Coletânea Curada de Pontos Cantados Essenciais", isCore: false, normalPrice: "€ 12,00" },
+  { text: "Bônus 9: Coleção Oficial de Iconografia Sagrada da Umbanda", isCore: false, normalPrice: "€ 16,00" },
+  { text: "Bônus 10: Círculo Fechado de Estudos Umbandistas - Whatsapp", isCore: false, normalPrice: "€ 29,00" },
 ];
 
 const feedbacks = [
@@ -180,15 +180,8 @@ export const UnifiedOfferStep: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
-      {/* 1. Badge 100% + Headline + Preço Inicial */}
+      {/* 1. Headline + Preço Inicial */}
       <div className="w-full mb-6 pt-1 max-w-md mx-auto">
-        <div
-          className="inline-flex items-center justify-center px-3.5 py-1 rounded-full font-black text-xs mb-3 shadow-sm"
-          style={{ backgroundColor: "#ef4444", color: "#ffffff" }}
-        >
-          100%
-        </div>
-
         <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground leading-snug mb-4">
           <span style={{ color: "#ef4444" }} className="font-extrabold uppercase">SOMENTE HOJE:</span> Você vai evoluir investindo no{" "}
           <span style={{ color: "#ef4444" }} className="font-extrabold">Aplicativo do Mapa Mental da Umbanda</span> com o{" "}
@@ -269,23 +262,53 @@ export const UnifiedOfferStep: React.FC = () => {
           <strong className="text-primary font-black uppercase">ÚLTIMO DIA:</strong> Aproveite agora! Você não verá essa oportunidade em outro momento.
         </p>
 
-        {/* Lista de Recursos / Bônus (Pills Verticais) */}
-        <div className="space-y-2 mb-6 text-left">
+        {/* Lista de Recursos / Bônus (Pills Verticais com Ícone Amarelo, Preço Riscado e Tag Grátis) */}
+        <div className="space-y-2.5 mb-6 text-left">
           {offerItems.map((item, idx) => (
             <div
               key={idx}
-              className="w-full bg-card rounded-xl p-3 border border-border/80 shadow-sm flex items-center gap-3"
+              className="w-full bg-card rounded-2xl p-3 border border-border/80 shadow-sm flex items-center justify-between gap-3"
             >
-              <div
-                className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
-                  item.isCore ? "bg-green-500/20 text-green-600" : "bg-amber-500/20 text-amber-600"
-                }`}
-              >
-                {item.isCore ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : <Gift className="w-3.5 h-3.5 stroke-[2.5]" />}
+              <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 shadow-sm"
+                  style={
+                    item.isCore
+                      ? { backgroundColor: "rgba(34, 197, 94, 0.15)", color: "#16a34a" }
+                      : { backgroundColor: "#fef3c7", color: "#d97706", border: "1px solid #fde68a" }
+                  }
+                >
+                  {item.isCore ? (
+                    <Check className="w-4 h-4 stroke-[3]" style={{ color: "#16a34a" }} />
+                  ) : (
+                    <span className="text-sm leading-none select-none">🎁</span>
+                  )}
+                </div>
+                <span className="text-xs sm:text-sm font-bold text-foreground leading-tight">
+                  {item.text}
+                </span>
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground leading-tight">
-                {item.text}
-              </span>
+
+              {!item.isCore && item.normalPrice && (
+                <div className="flex items-center gap-1.5 shrink-0 pl-1">
+                  <span
+                    style={{ color: "#ef4444", textDecoration: "line-through" }}
+                    className="text-[11px] sm:text-xs font-black"
+                  >
+                    {item.normalPrice}
+                  </span>
+                  <span
+                    style={{
+                      backgroundColor: "rgba(34, 197, 94, 0.15)",
+                      color: "#16a34a",
+                      border: "1px solid rgba(34, 197, 94, 0.35)",
+                    }}
+                    className="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider"
+                  >
+                    GRÁTIS
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </div>
