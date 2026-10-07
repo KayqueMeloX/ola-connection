@@ -36,15 +36,26 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
       {/* Sticky Top Bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-md border-b border-border/40">
         {isOfferPage ? (
-          <div className="w-full max-w-lg mx-auto px-4 py-2.5">
+          <div className="w-full max-w-lg mx-auto px-4 pt-2.5 pb-2">
             <a
               href={CHECKOUT_URL}
               onClick={onCheckoutClick}
-              className="w-full py-3.5 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer uppercase tracking-wide"
+              className="w-full py-3.5 sm:py-4 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-between gap-3 cursor-pointer"
             >
-              <span>QUERO MEU ACESSO AGORA</span>
-              <ArrowRight className="w-5 h-5" />
+              <div className="flex-1 flex flex-col items-center justify-center text-center leading-tight">
+                <span className="font-extrabold text-sm sm:text-base tracking-wide uppercase drop-shadow-sm">
+                  QUERO MEU ACESSO POR
+                </span>
+                <span className="font-black text-xl sm:text-2xl mt-0.5 drop-shadow-sm">
+                  € 19,90
+                </span>
+              </div>
+              <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 drop-shadow-sm" strokeWidth={2.5} />
             </a>
+            <div className="flex items-center justify-center gap-1.5 mt-1.5 text-[11px] text-muted-foreground font-medium">
+              <span className="text-primary">🔒</span>
+              <span>Pagamento Seguro Hotmart • Acesso Imediato</span>
+            </div>
           </div>
         ) : (
           <>
@@ -85,7 +96,7 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
       {/* Main Container */}
       <div
         className={`flex-1 flex flex-col items-center px-4 max-w-lg mx-auto w-full pb-8 ${
-          isOfferPage ? "pt-20 sm:pt-24" : "pt-52 md:pt-48"
+          isOfferPage ? "pt-28 sm:pt-32" : "pt-52 md:pt-48"
         }`}
       >
         {children}

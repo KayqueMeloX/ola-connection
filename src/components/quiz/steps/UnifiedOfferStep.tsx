@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Check, ShieldCheck, Sparkles, Zap, Star, ArrowRight, Lock, Gift, Mail, FileText, CheckCircle } from "lucide-react";
+import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Mail, CheckCircle } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
 
@@ -74,7 +74,7 @@ export const UnifiedOfferStep: React.FC = () => {
 
   const handleCheckoutClick = () => {
     pauseForVideo();
-    trackEvent("checkout_click", "checkout_click", 7, {
+    trackEvent("checkout_click", "checkout_click", 8, {
       price: 19.9,
       currency: "EUR",
     });
@@ -93,57 +93,13 @@ export const UnifiedOfferStep: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
-      {/* 1. Diagnóstico Espiritual */}
-      <div className="w-full bg-gradient-to-br from-card to-primary/5 rounded-3xl p-6 border-2 border-primary/20 shadow-xl mb-8">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Sparkles className="w-5 h-5 text-accent animate-pulse" />
-          <span className="text-xs sm:text-sm font-black text-primary uppercase tracking-wider">
-            DIAGNÓSTICO ESPIRITUAL CONCLUÍDO
-          </span>
-          <Sparkles className="w-5 h-5 text-accent animate-pulse" />
-        </div>
-
-        <div className="flex items-center justify-center gap-4 my-4">
-          <div className="relative w-20 h-20 rounded-full border-4 border-primary flex items-center justify-center bg-card shadow-md">
-            <span className="text-2xl font-black text-foreground">88%</span>
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-bold text-muted-foreground uppercase">Resultado</p>
-            <p className="text-xl font-black text-foreground">Aptidão Excelente 🤩</p>
-          </div>
-        </div>
-
-        <p className="text-base sm:text-lg text-foreground leading-relaxed">
-          <span className="font-extrabold text-primary">Parabéns!</span> Suas respostas indicam que você tem grande conexão espiritual e respeito pela Umbanda. O{" "}
-          <span className="font-bold underline decoration-primary decoration-2 underline-offset-2">
-            Aplicativo do Mapa Mental da Umbanda
-          </span>{" "}
-          é o guia ideal para acelerar seu conhecimento de forma simples, visual e organizada.
-        </p>
-      </div>
-
-      {/* 2. Botão Rápido de Compra no Topo */}
-      <div className="w-full mb-8">
-        <button
-          onClick={handleCheckoutClick}
-          className="w-full py-5 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-lg sm:text-xl rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-3 cursor-pointer"
-        >
-          <span>QUERO MEU ACESSO POR € 19,90</span>
-          <ArrowRight className="w-6 h-6" />
-        </button>
-        <div className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground">
-          <Lock className="w-3.5 h-3.5 text-primary" />
-          <span>Pagamento Seguro Hotmart • Acesso Imediato</span>
-        </div>
-      </div>
-
-      {/* 3. Prévia do Aplicativo em Vídeo */}
-      <div className="w-full mb-10 text-left">
-        <div className="flex items-center gap-2 mb-3">
+      {/* 1. Apresentação do Produto & Prévia em Vídeo */}
+      <div className="w-full mb-8 text-left">
+        <div className="flex items-center gap-2 mb-4">
           <Zap className="w-6 h-6 text-accent" />
-          <h3 className="text-xl sm:text-2xl font-black text-foreground">
+          <h2 className="text-xl sm:text-2xl font-black text-foreground leading-tight">
             Veja como funciona o Aplicativo por dentro:
-          </h3>
+          </h2>
         </div>
 
         <div className="w-full max-w-sm mx-auto mb-6">
@@ -186,29 +142,29 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Como Você Irá Receber */}
+      {/* 2. Como Você Irá Receber */}
       <div className="w-full bg-card rounded-2xl p-6 border border-border shadow-md text-left mb-10">
-        <h4 className="text-lg font-black text-foreground mb-4 flex items-center gap-2">
+        <h3 className="text-lg font-black text-foreground mb-4 flex items-center gap-2">
           <Mail className="w-5 h-5 text-primary" />
           Como vou receber o material?
-        </h4>
+        </h3>
         <div className="space-y-3">
           <div className="flex items-start gap-3">
             <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
             <p className="text-sm sm:text-base text-foreground">
-              <strong>Acesso Imediato por E-mail:</strong> Assim que a compra for aprovada na Hotmart, seus dados de acesso chegam no seu e-mail.
+              <strong>Acesso Imediato por E-mail:</strong> Assim que a compra for aprovada na Hotmart, seus dados de acesso chegam instantaneamente no seu e-mail.
             </p>
           </div>
           <div className="flex items-start gap-3">
             <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
             <p className="text-sm sm:text-base text-foreground">
-              <strong>No Celular, Tablet e Computador:</strong> Baixe o App ou estude em PDF de onde preferir.
+              <strong>No Celular, Tablet e Computador:</strong> Baixe o Aplicativo ou estude em PDF de onde preferir.
             </p>
           </div>
         </div>
       </div>
 
-      {/* 5. Combo dos 10 Bônus Inclusos */}
+      {/* 3. Combo dos 10 Bônus Inclusos */}
       <div className="w-full mb-10">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Gift className="w-6 h-6 text-primary" />
@@ -233,7 +189,7 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 6. Caixa de Oferta Final / Preço */}
+      {/* 4. Caixa de Oferta Final / Preço */}
       <div className="w-full bg-gradient-to-b from-card via-card to-primary/5 rounded-3xl p-6 sm:p-8 border-2 border-primary shadow-2xl mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-4">
           <Star className="w-4 h-4 text-primary fill-current" />
@@ -292,7 +248,7 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 7. Garantia Incondicional de 60 Dias */}
+      {/* 5. Garantia Incondicional de 60 Dias */}
       <div className="w-full bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col sm:flex-row items-center gap-4 text-left mb-8">
         <ShieldCheck className="w-16 h-16 text-green-600 shrink-0" />
         <div>
