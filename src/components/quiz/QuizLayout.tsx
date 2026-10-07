@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { QuizHeader } from "./QuizHeader";
 import { SpiritualBalance } from "./SpiritualBalance";
 
@@ -36,29 +36,14 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
       {/* Sticky Top Bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-md border-b border-border/40">
         {isOfferPage ? (
-          <div className="w-full max-w-lg mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
-            <div className="flex flex-col text-left select-none">
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-                <span className="text-xs font-black text-foreground">Mapa Mental</span>
-                <span className="text-xs font-black text-accent">UMBANDA</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[11px] text-muted-foreground line-through">€ 67</span>
-                <span className="text-sm font-black text-primary">€ 19,90</span>
-                <span className="text-[9px] font-extrabold text-green-600 bg-green-500/10 px-1.5 py-0.5 rounded">
-                  70% OFF
-                </span>
-              </div>
-            </div>
-
+          <div className="w-full max-w-lg mx-auto px-4 py-2.5">
             <a
               href={CHECKOUT_URL}
               onClick={onCheckoutClick}
-              className="py-2.5 px-4 sm:px-5 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all animate-pulse-scale flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              className="w-full py-3.5 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer uppercase tracking-wide"
             >
-              <span>COMPRAR AGORA</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>QUERO MEU ACESSO AGORA</span>
+              <ArrowRight className="w-5 h-5" />
             </a>
           </div>
         ) : (
