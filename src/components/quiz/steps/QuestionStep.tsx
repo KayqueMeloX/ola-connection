@@ -44,8 +44,8 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
         )}
       </div>
 
-      {/* Options list with guaranteed vertical spacing */}
-      <div className="flex flex-col gap-3 space-y-3 mb-8 w-full">
+      {/* Options list with subtle vertical spacing */}
+      <div className="flex flex-col mb-8 w-full">
         {question.options.map((opt, idx) => {
           const isSelected = selectedAnswer === idx;
 
@@ -61,11 +61,11 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 onClick={() => onSelectAnswer(idx)}
                 disabled={selectedAnswer !== null}
                 className={cn(
-                  "w-full py-4 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300 block",
+                  "w-full py-3.5 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300 block",
                   solidBg,
                   selectedAnswer === null && "hover:scale-[1.02] active:scale-[0.99]"
                 )}
-                style={{ marginTop: idx === 0 ? "0" : "12px" }}
+                style={{ marginTop: idx === 0 ? "0px" : "7px" }}
               >
                 <span>{opt.text}</span>
               </button>
@@ -88,7 +88,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 borderBg,
                 selectedAnswer === null && "hover:scale-[1.01] active:scale-[0.99]"
               )}
-              style={{ marginTop: idx === 0 ? "0" : "12px" }}
+              style={{ marginTop: idx === 0 ? "0px" : "10px" }}
             >
               {opt.emoji && (
                 <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
