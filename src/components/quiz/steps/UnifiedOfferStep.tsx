@@ -180,8 +180,29 @@ export const UnifiedOfferStep: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
-      {/* 1. Headline + Preço Inicial */}
+      {/* 1. Temporizador de Escassez + Headline + Preço Inicial */}
       <div className="w-full mb-6 pt-1 max-w-md mx-auto">
+        {/* Temporizador de Escassez / Urgência em Destaque Vermelho */}
+        <div
+          className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-2xl mb-3 font-black tracking-wide shadow-md animate-pulse"
+          style={{
+            backgroundColor: "rgba(239, 68, 68, 0.12)",
+            color: "#ef4444",
+            border: "1.5px solid rgba(239, 68, 68, 0.45)",
+          }}
+        >
+          <Timer className="w-4 h-4 shrink-0" style={{ color: "#ef4444" }} />
+          <span className="text-xs sm:text-sm font-black uppercase tracking-wider flex items-center">
+            DESCONTO RESERVADO POR:
+            <span
+              className="font-mono text-xs sm:text-sm px-2 py-0.5 rounded-lg font-black ml-1.5 text-white shadow-sm"
+              style={{ backgroundColor: "#ef4444" }}
+            >
+              {formatTimer(timeLeft)}
+            </span>
+          </span>
+        </div>
+
         <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground leading-snug mb-4">
           <span style={{ color: "#ef4444" }} className="font-extrabold uppercase">SOMENTE HOJE:</span> Você vai evoluir investindo no{" "}
           <span style={{ color: "#ef4444" }} className="font-extrabold">Aplicativo do Mapa Mental da Umbanda</span> com o{" "}
