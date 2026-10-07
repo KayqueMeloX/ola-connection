@@ -5,11 +5,7 @@ import { BackgroundMusicProvider } from "@/components/quiz/BackgroundMusicProvid
 import { IntroStep } from "@/components/quiz/steps/IntroStep";
 import { QuestionStep } from "@/components/quiz/steps/QuestionStep";
 import { AnalyzingStep } from "@/components/quiz/steps/AnalyzingStep";
-import { ResultStep } from "@/components/quiz/steps/ResultStep";
-import { OfferIntroStep } from "@/components/quiz/steps/OfferIntroStep";
-import { HowToReceiveStep } from "@/components/quiz/steps/HowToReceiveStep";
-import { BonusStep } from "@/components/quiz/steps/BonusStep";
-import { CheckoutOfferStep } from "@/components/quiz/steps/CheckoutOfferStep";
+import { UnifiedOfferStep } from "@/components/quiz/steps/UnifiedOfferStep";
 import { quizQuestions } from "@/data/quiz-data";
 import { trackEvent } from "@/lib/analytics";
 
@@ -17,15 +13,7 @@ export const Route = createFileRoute("/")({
   component: QuizApp,
 });
 
-type StepType =
-  | "intro"
-  | "quiz"
-  | "analyzing"
-  | "result"
-  | "offer"
-  | "howToReceive"
-  | "bonus"
-  | "frontDuplo";
+type StepType = "intro" | "quiz" | "analyzing" | "offer";
 
 function QuizApp() {
   const [currentStep, setCurrentStep] = useState<StepType>("intro");
@@ -36,7 +24,15 @@ function QuizApp() {
   const [spiritualBalance, setSpiritualBalance] = useState(0);
   const [previousBalance, setPreviousBalance] = useState(0);
 
-  const totalSteps = 16;
+  const totalSteps = 5;
+
+  const scrollToTop = () => {
+    try {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    } catch {}
+  };
 
   // Track initial page view
   useEffect(() => {
@@ -45,7 +41,7 @@ function QuizApp() {
 
   // Track each step transition
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
 
     if (currentStep === "quiz") {
       trackEvent("question_view", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
@@ -53,17 +49,9 @@ function QuizApp() {
         questionText: quizQuestions[currentQuestionIndex]?.question,
       });
     } else if (currentStep === "analyzing") {
-      trackEvent("analyzing_view", "analyzing", 12);
-    } else if (currentStep === "result") {
-      trackEvent("result_view", "result", 13, { score });
+      trackEvent("analyzing_view", "analyzing", 6);
     } else if (currentStep === "offer") {
-      trackEvent("offer_intro_view", "offer_intro", 14);
-    } else if (currentStep === "howToReceive") {
-      trackEvent("how_to_receive_view", "how_to_receive", 15);
-    } else if (currentStep === "bonus") {
-      trackEvent("bonus_view", "bonus", 16);
-    } else if (currentStep === "frontDuplo") {
-      trackEvent("checkout_step_view", "checkout_step", 17);
+      trackEvent("offer_view", "offer_view", 7, { score });
     }
   }, [currentStep, currentQuestionIndex, score]);
 
@@ -72,11 +60,9 @@ function QuizApp() {
     setSelectedRole(role);
     trackEvent("role_selected", "role_selected", 2, { role });
     setPreviousBalance(spiritualBalance);
-    setSpiritualBalance((prev) => prev + 20);
+    setSpiritualBalance((prev) => prev + 30);
     setTimeout(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+      scrollToTop();
       setCurrentStep("quiz");
     }, 300);
   };
@@ -99,10 +85,8 @@ function QuizApp() {
 
     setTimeout(() => {
       setPreviousBalance(spiritualBalance);
-      setSpiritualBalance((prev) => prev + 20);
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+      setSpiritualBalance((prev) => prev + 30);
+      scrollToTop();
 
       if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
@@ -120,17 +104,9 @@ function QuizApp() {
       case "quiz":
         return 2 + currentQuestionIndex;
       case "analyzing":
-        return 11;
-      case "result":
-        return 12;
+        return 5;
       case "offer":
-        return 13;
-      case "howToReceive":
-        return 14;
-      case "bonus":
-        return 15;
-      case "frontDuplo":
-        return 16;
+        return 5;
       default:
         return 1;
     }
@@ -144,6 +120,7 @@ function QuizApp() {
         spiritualBalance={spiritualBalance}
         previousBalance={previousBalance}
         hideLogo={currentStep === "analyzing"}
+        showProgress={currentStep !== "offer"}
       >
         {currentStep === "intro" && (
           <IntroStep selectedRole={selectedRole} onSelectRole={handleSelectRole} />
@@ -161,30 +138,10 @@ function QuizApp() {
         )}
 
         {currentStep === "analyzing" && (
-          <AnalyzingStep onComplete={() => setCurrentStep("result")} />
+          <AnalyzingStep onComplete={() => setCurrentStep("offer")} />
         )}
 
-        {currentStep === "result" && (
-          <ResultStep
-            score={score}
-            totalQuestions={quizQuestions.length}
-            onNext={() => setCurrentStep("offer")}
-          />
-        )}
-
-        {currentStep === "offer" && (
-          <OfferIntroStep onNext={() => setCurrentStep("howToReceive")} />
-        )}
-
-        {currentStep === "howToReceive" && (
-          <HowToReceiveStep onNext={() => setCurrentStep("bonus")} />
-        )}
-
-        {currentStep === "bonus" && (
-          <BonusStep onNext={() => setCurrentStep("frontDuplo")} />
-        )}
-
-        {currentStep === "frontDuplo" && <CheckoutOfferStep />}
+        {currentStep === "offer" && <UnifiedOfferStep />}
       </QuizLayout>
     </BackgroundMusicProvider>
   );

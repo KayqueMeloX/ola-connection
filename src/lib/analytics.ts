@@ -125,22 +125,12 @@ export const clearStoredEvents = () => {
 export const FUNNEL_STAGES = [
   { key: "intro", label: "1. Acessou o Quiz (Intro)", number: 1 },
   { key: "role_selected", label: "2. Escolheu Perfil (Iniciante/Umbandista)", number: 2 },
-  { key: "q1", label: "3. Pergunta 1 (Fundamentos)", number: 3 },
-  { key: "q2", label: "4. Pergunta 2 (Entidades)", number: 4 },
-  { key: "q3", label: "5. Pergunta 3 (Pontos Riscados)", number: 5 },
-  { key: "q4", label: "6. Pergunta 4 (Dificuldades)", number: 6 },
-  { key: "q5", label: "7. Pergunta 5 (Desejo App)", number: 7 },
-  { key: "q6", label: "8. Pergunta 6 (Arquétipos Orixás)", number: 8 },
-  { key: "q7", label: "9. Pergunta 7 (Rituais)", number: 9 },
-  { key: "q8", label: "10. Pergunta 8 (Altar)", number: 10 },
-  { key: "q9", label: "11. Pergunta 9 (Elementos Natureza)", number: 11 },
-  { key: "analyzing", label: "12. Tela Analisando", number: 12 },
-  { key: "result", label: "13. Tela Resultado / Pontuação", number: 13 },
-  { key: "offer_intro", label: "14. Apresentação da Oferta", number: 14 },
-  { key: "how_to_receive", label: "15. Vídeos e Como Receber", number: 15 },
-  { key: "bonus", label: "16. Lista de 10 Bônus", number: 16 },
-  { key: "checkout_step", label: "17. Tela de Compra / Preço", number: 17 },
-  { key: "checkout_click", label: "18. Clicou no Botão Hotmart (IC)", number: 18 },
+  { key: "q1", label: "3. Pergunta 1 (Fundamento / Caridade)", number: 3 },
+  { key: "q2", label: "4. Pergunta 2 (Entidades / Guias)", number: 4 },
+  { key: "q3", label: "5. Pergunta 3 (Desejo do Aplicativo)", number: 5 },
+  { key: "analyzing", label: "6. Tela Analisando / Diagnóstico", number: 6 },
+  { key: "offer_view", label: "7. Visualizou Oferta Unificada Completa", number: 7 },
+  { key: "checkout_click", label: "8. Clicou no Botão Hotmart (€ 19,90)", number: 8 },
 ];
 
 export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
