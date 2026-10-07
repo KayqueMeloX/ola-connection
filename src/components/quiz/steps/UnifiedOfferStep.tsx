@@ -1,24 +1,65 @@
 import React, { useEffect, useRef } from "react";
-import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Mail, CheckCircle } from "lucide-react";
+import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Mail, CheckCircle, Sparkles, MessageCircle, Heart } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
 
 const CHECKOUT_URL = "https://pay.hotmart.com/G106783622L?checkoutMode=10";
 
 const bonuses = [
-  { src: "/assets/bonus-1-C8Q0zK5Z.png", alt: "Bônus 1 - Curso de Doutrina Umbandista" },
-  { src: "/assets/bonus-2-C4A5njPY.png", alt: "Bônus 2 - Guia Tronos Divinos e os Orixás" },
-  { src: "/assets/bonus-3-Cm0f-TZ4.png", alt: "Bônus 3 - Guia de Oferendas e Rituais" },
-  { src: "/assets/bonus-4-Be6u0da-.png", alt: "Bônus 4 - Áudiobooks do Conteúdo" },
-  { src: "/assets/bonus-6-mais-B82pbZGs.png", alt: "+6 Bônus Exclusivos" },
+  {
+    src: "/assets/bonus-1-C8Q0zK5Z.png",
+    title: "Bônus 1: Formação Fundamental da Doutrina Umbandista",
+    normalPrice: "€ 27,00",
+  },
+  {
+    src: "/assets/bonus-2-C4A5njPY.png",
+    title: "Bônus 2: Audiobook Experience - Imersão Guiada",
+    normalPrice: "€ 19,00",
+  },
+  {
+    src: "/assets/bonus-3-Cm0f-TZ4.png",
+    title: "Bônus 3: Biblioteca dos Tronos e Regências Divinas",
+    normalPrice: "€ 17,00",
+  },
+  {
+    src: "/assets/bonus-4-Be6u0da-.png",
+    title: "Bônus 4: Atlas Energético das 95 Ervas Sagradas",
+    normalPrice: "€ 22,00",
+  },
+  {
+    src: "/assets/bonus-6-mais-B82pbZGs.png",
+    title: "+6 Bônus Exclusivos de Firmezas, Defumação e Pontos",
+    normalPrice: "€ 45,00",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Mariana Silva",
+    role: "Iniciante no Terreiro",
+    comment: "Sensacional! Como iniciante, eu sempre me perdia nos nomes dos Orixás e suas regências. O mapa mental clareou tudo na minha mente em menos de 3 dias!",
+    rating: 5,
+  },
+  {
+    name: "Carlos Eduardo Mendes",
+    role: "Médium de Terreiro",
+    comment: "Material riquíssimo, direto ao ponto e muito visual. O guia de ervas e pontos cantados eu consulto toda semana no meu celular.",
+    rating: 5,
+  },
+  {
+    name: "Juliana Moreira",
+    role: "Praticante de Umbanda",
+    comment: "Vale cada centavo! Só os bônus com o manual de firmezas e banhos já valem muito mais do que os 20 euros cobrados. Recomendo de olhos fechados.",
+    rating: 5,
+  },
 ];
 
 const mainFeatures = [
   { text: "APP Mapa Mental da Umbanda ™ (iOS e Android)" },
-  { text: "Acesso Vitalício sem mensalidades" },
-  { text: "Combo Completo com os 10 Super Bônus inclusos" },
-  { text: "Material Didático em PDF de Alta Resolução" },
-  { text: "60 Dias de Garantia Incondicional" },
+  { text: "Acesso Vitalício sem qualquer mensalidade" },
+  { text: "Combo Completo com todos os 10 Super Bônus" },
+  { text: "Material em PDF de Alta Resolução para Estudo e Impressão" },
+  { text: "60 Dias de Garantia Incondicional de Devolução" },
 ];
 
 export const UnifiedOfferStep: React.FC = () => {
@@ -93,9 +134,27 @@ export const UnifiedOfferStep: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
-      {/* 1. Apresentação do Produto & Prévia em Vídeo */}
-      <div className="w-full mb-8 text-left">
-        <div className="flex items-center gap-2 mb-4">
+      {/* 1. Headline de Alto Impacto */}
+      <div className="w-full mb-8 pt-1">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-3">
+          <Sparkles className="w-4 h-4 text-accent animate-pulse" />
+          <span className="text-xs font-black text-primary uppercase tracking-wider">
+            OFERTA ESPECIAL EXCLUSIVA
+          </span>
+        </div>
+
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground leading-tight mb-3">
+          Domine os Fundamentos, Rituais e Guias da Umbanda na Palma da Sua Mão!
+        </h1>
+
+        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto">
+          Aprenda de forma simples, visual e prática com o <strong className="text-foreground font-bold">Aplicativo do Mapa Mental da Umbanda</strong>, feito sob medida para iniciantes e praticantes.
+        </p>
+      </div>
+
+      {/* 2. Demonstração do Produto em Vídeo */}
+      <div className="w-full mb-10 text-left">
+        <div className="flex items-center gap-2 mb-3">
           <Zap className="w-6 h-6 text-accent" />
           <h2 className="text-xl sm:text-2xl font-black text-foreground leading-tight">
             Veja como funciona o Aplicativo por dentro:
@@ -142,7 +201,7 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Como Você Irá Receber */}
+      {/* 3. Como Você Irá Receber */}
       <div className="w-full bg-card rounded-2xl p-6 border border-border shadow-md text-left mb-10">
         <h3 className="text-lg font-black text-foreground mb-4 flex items-center gap-2">
           <Mail className="w-5 h-5 text-primary" />
@@ -164,7 +223,7 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Combo dos 10 Bônus Inclusos */}
+      {/* 4. Combo dos 10 Bônus com Ancoragem de Preço */}
       <div className="w-full mb-10">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Gift className="w-6 h-6 text-primary" />
@@ -173,23 +232,68 @@ export const UnifiedOfferStep: React.FC = () => {
           </h3>
         </div>
         <p className="text-sm sm:text-base text-muted-foreground mb-6">
-          Tudo incluído no mesmo valor de € 19,90, sem nenhum custo adicional.
+          Mais de <span className="line-through font-bold">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
         </p>
 
-        <div className="w-full max-w-md mx-auto space-y-4 mb-8">
+        <div className="w-full max-w-md mx-auto space-y-5 mb-8">
           {bonuses.map((bonus, idx) => (
-            <div key={idx} className="w-full">
+            <div key={idx} className="w-full bg-card rounded-2xl p-3 border border-border shadow-md text-left">
               <img
                 src={bonus.src}
-                alt={bonus.alt}
-                className="w-full h-auto rounded-2xl shadow-lg border border-border"
+                alt={bonus.title}
+                className="w-full h-auto rounded-xl shadow mb-3 border border-border/50"
               />
+              <div className="flex items-center justify-between px-1">
+                <span className="text-xs sm:text-sm font-bold text-foreground flex-1 pr-2">
+                  {bonus.title}
+                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-xs text-muted-foreground line-through">{bonus.normalPrice}</span>
+                  <span className="text-xs font-black text-green-600 bg-green-500/15 px-2 py-0.5 rounded-full">
+                    GRÁTIS
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 4. Caixa de Oferta Final / Preço */}
+      {/* 5. Depoimentos e Prova Social */}
+      <div className="w-full mb-10 text-left">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <MessageCircle className="w-6 h-6 text-accent" />
+          <h3 className="text-xl sm:text-2xl font-black text-foreground text-center">
+            O que dizem os Umbandistas que já usam:
+          </h3>
+        </div>
+        <p className="text-sm text-muted-foreground text-center mb-6">
+          Depoimentos de quem já transformou seu aprendizado com o Mapa Mental.
+        </p>
+
+        <div className="w-full space-y-4">
+          {testimonials.map((t, idx) => (
+            <div key={idx} className="bg-card rounded-2xl p-5 border border-border shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <p className="font-bold text-base text-foreground">{t.name}</p>
+                  <p className="text-xs text-primary font-semibold">{t.role}</p>
+                </div>
+                <div className="flex gap-0.5 text-amber-500">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground italic leading-relaxed">
+                "{t.comment}"
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 6. Caixa de Oferta Final / Preço */}
       <div className="w-full bg-gradient-to-b from-card via-card to-primary/5 rounded-3xl p-6 sm:p-8 border-2 border-primary shadow-2xl mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-4">
           <Star className="w-4 h-4 text-primary fill-current" />
@@ -248,7 +352,7 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 5. Garantia Incondicional de 60 Dias */}
+      {/* 7. Garantia Incondicional de 60 Dias */}
       <div className="w-full bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col sm:flex-row items-center gap-4 text-left mb-8">
         <ShieldCheck className="w-16 h-16 text-green-600 shrink-0" />
         <div>
