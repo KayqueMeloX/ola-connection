@@ -6,11 +6,7 @@ interface OfferIntroStepProps {
 
 export const OfferIntroStep: React.FC<OfferIntroStepProps> = ({ onNext }) => {
   useEffect(() => {
-    try {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    } catch {}
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (

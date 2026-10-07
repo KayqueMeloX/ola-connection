@@ -12,11 +12,7 @@ export const HowToReceiveStep: React.FC<HowToReceiveStepProps> = ({ onNext }) =>
   const { pauseForVideo, resumeAfterVideo } = useBackgroundMusic();
 
   useEffect(() => {
-    try {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    } catch {}
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     const win = window as unknown as {
       Vimeo?: {

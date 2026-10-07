@@ -14,11 +14,7 @@ const bonuses = [
 
 export const BonusStep: React.FC<BonusStepProps> = ({ onNext }) => {
   useEffect(() => {
-    try {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    } catch {}
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (

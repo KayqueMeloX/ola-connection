@@ -38,22 +38,14 @@ function QuizApp() {
 
   const totalSteps = 16;
 
-  const scrollToTop = () => {
-    try {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    } catch {}
-  };
-
   // Track initial page view
   useEffect(() => {
     trackEvent("page_view", "intro", 1);
   }, []);
 
-  // Track each step transition and ensure instant scroll to top
+  // Track each step transition
   useEffect(() => {
-    scrollToTop();
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     if (currentStep === "quiz") {
       trackEvent("question_view", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
@@ -81,7 +73,6 @@ function QuizApp() {
     setPreviousBalance(spiritualBalance);
     setSpiritualBalance((prev) => prev + 20);
     setTimeout(() => {
-      scrollToTop();
       setCurrentStep("quiz");
     }, 350);
   };
@@ -105,7 +96,9 @@ function QuizApp() {
     setTimeout(() => {
       setPreviousBalance(spiritualBalance);
       setSpiritualBalance((prev) => prev + 20);
-      scrollToTop();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
 
       if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
@@ -188,6 +181,15 @@ function QuizApp() {
         )}
 
         {currentStep === "frontDuplo" && <CheckoutOfferStep />}
+
+        {/* Footer Support/Hotmart Endorsement Badge */}
+        <div className="w-full mt-4 pt-3">
+          <img
+            src="/assets/rodape-apoio-hotmart.png"
+            alt="Apoio: Mãe Célia de Oxossi, Terreiro Cavaleiros de Umbanda - Lisboa/PT, Hotmart"
+            className="w-full max-w-sm mx-auto object-contain"
+          />
+        </div>
       </QuizLayout>
     </BackgroundMusicProvider>
   );
