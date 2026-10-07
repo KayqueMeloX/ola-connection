@@ -29,23 +29,23 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Question Text */}
       <div className="mb-4 text-center">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-snug px-2 mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-snug px-2 mb-3">
           {question.question}
         </h2>
         {question.questionImage && (
-          <div className="flex justify-center mb-5">
+          <div className="flex justify-center mb-4">
             <img
               src={question.questionImage}
               alt="Ilustração da pergunta"
               decoding="async"
-              className="w-64 h-64 sm:w-72 sm:h-72 max-w-full max-h-[250px] sm:max-h-[280px] object-contain drop-shadow-md"
+              className="w-60 h-60 sm:w-72 sm:h-72 max-w-full max-h-[240px] sm:max-h-[280px] object-contain drop-shadow-md"
             />
           </div>
         )}
       </div>
 
-      {/* Options list */}
-      <div className="flex flex-col gap-3.5 sm:gap-4 mb-8">
+      {/* Options list with guaranteed vertical spacing */}
+      <div className="flex flex-col gap-3 space-y-3 mb-8 w-full">
         {question.options.map((opt, idx) => {
           const isSelected = selectedAnswer === idx;
 
@@ -57,14 +57,15 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
             return (
               <button
                 key={idx}
+                type="button"
                 onClick={() => onSelectAnswer(idx)}
                 disabled={selectedAnswer !== null}
                 className={cn(
-                  "w-full py-4 sm:py-4.5 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300",
-                  "flex items-center justify-center gap-3",
+                  "w-full py-4 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300 block",
                   solidBg,
                   selectedAnswer === null && "hover:scale-[1.02] active:scale-[0.99]"
                 )}
+                style={{ marginTop: idx === 0 ? "0" : "12px" }}
               >
                 <span>{opt.text}</span>
               </button>
@@ -78,6 +79,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
           return (
             <button
               key={idx}
+              type="button"
               onClick={() => onSelectAnswer(idx)}
               disabled={selectedAnswer !== null}
               className={cn(
@@ -86,6 +88,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 borderBg,
                 selectedAnswer === null && "hover:scale-[1.01] active:scale-[0.99]"
               )}
+              style={{ marginTop: idx === 0 ? "0" : "12px" }}
             >
               {opt.emoji && (
                 <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
