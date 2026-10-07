@@ -1,6 +1,5 @@
 import React from "react";
 import { QuizHeader } from "./QuizHeader";
-import { SpiritualBalance } from "./SpiritualBalance";
 
 interface QuizLayoutProps {
   children: React.ReactNode;
@@ -17,8 +16,6 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
   currentStep,
   totalSteps,
   showProgress = true,
-  spiritualBalance = 0,
-  previousBalance = 0,
   hideLogo = false,
 }) => {
   const stepPercent = Math.round((currentStep / totalSteps) * 100);
@@ -27,12 +24,6 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm shadow-sm">
-        {showProgress && spiritualBalance > 0 && (
-          <div className="flex justify-center pt-3">
-            <SpiritualBalance balance={spiritualBalance} previousBalance={previousBalance} />
-          </div>
-        )}
-
         {!hideLogo && (
           <div className="flex justify-center py-4 px-4">
             <div className="animate-bounce-soft">
@@ -59,7 +50,7 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
         )}
       </div>
 
-      <div className="flex-1 flex flex-col items-center px-4 py-8 max-w-lg mx-auto w-full pt-52 md:pt-44">
+      <div className="flex-1 flex flex-col items-center px-4 py-6 max-w-lg mx-auto w-full pt-36 md:pt-36">
         {children}
       </div>
     </div>
