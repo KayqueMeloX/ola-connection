@@ -55,29 +55,33 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
             <a
               href={CHECKOUT_URL}
               onClick={onCheckoutClick}
-              className="w-full py-3.5 sm:py-4 px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-between gap-3 cursor-pointer"
+              className="w-full py-3 sm:py-3.5 px-4 sm:px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-between gap-2.5 cursor-pointer"
             >
               <div className="flex-1 flex flex-col items-center justify-center text-center leading-tight">
-                <span className="font-extrabold text-xs sm:text-sm tracking-wide uppercase drop-shadow-sm">
-                  QUERO MEU ACESSO POR
-                </span>
-                <span className="font-black text-xl sm:text-2xl mt-0.5 drop-shadow-sm">
-                  € 19,90
-                </span>
-                {/* 5-minute countdown timer directly inside the button */}
+                {/* Linha 1: Tudo na mesma linha */}
+                <div className="flex items-baseline justify-center gap-1.5">
+                  <span className="font-extrabold text-xs sm:text-sm tracking-wide uppercase drop-shadow-sm">
+                    QUERO MEU ACESSO POR
+                  </span>
+                  <span className="font-black text-sm sm:text-base drop-shadow-sm">
+                    19,90€
+                  </span>
+                </div>
+
+                {/* Linha 2: Tamanho maior com texto 'SEU DESCONTO ACABA EM' */}
                 <div
-                  className="flex items-center justify-center gap-1.5 mt-1.5 px-3 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-inner"
+                  className="flex items-center justify-center gap-1.5 mt-1.5 px-3.5 py-0.5 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider shadow-inner"
                   style={{
-                    backgroundColor: "rgba(0, 0, 0, 0.28)",
+                    backgroundColor: "rgba(0, 0, 0, 0.32)",
                     color: "#fef08a",
                   }}
                 >
-                  <Timer className="w-3 h-3 animate-pulse text-yellow-300 shrink-0" />
-                  <span>DESCONTO RESERVADO:</span>
+                  <Timer className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-pulse text-yellow-300 shrink-0" />
+                  <span>SEU DESCONTO ACABA EM</span>
                   <span className="font-mono text-white font-black">{formatTimer(timeLeft)}</span>
                 </div>
               </div>
-              <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 drop-shadow-sm" strokeWidth={2.5} />
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 drop-shadow-sm" strokeWidth={2.5} />
             </a>
           </div>
         </div>
