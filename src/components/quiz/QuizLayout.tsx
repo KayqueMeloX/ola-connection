@@ -58,15 +58,11 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
               className="w-full py-3 sm:py-3.5 px-4 sm:px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-between gap-2.5 cursor-pointer"
             >
               <div className="flex-1 flex flex-col items-center justify-center text-center leading-tight">
-                {/* Linha 1: Tudo na mesma linha */}
-                <div className="flex items-baseline justify-center gap-1.5">
-                  <span className="font-extrabold text-xs sm:text-sm tracking-wide uppercase drop-shadow-sm">
-                    QUERO MEU ACESSO POR
-                  </span>
-                  <span className="font-black text-sm sm:text-base drop-shadow-sm">
-                    19,90€
-                  </span>
-                </div>
+                {/* Linha 1: Perfeitamente alinhado na mesma linha */}
+                <span className="font-extrabold text-xs sm:text-sm tracking-wide uppercase drop-shadow-sm whitespace-nowrap flex items-center justify-center gap-1.5">
+                  <span>QUERO MEU ACESSO POR</span>
+                  <span className="font-black text-xs sm:text-sm">19,90€</span>
+                </span>
 
                 {/* Linha 2: Tamanho maior com texto 'SEU DESCONTO ACABA EM' */}
                 <div
