@@ -25,11 +25,6 @@ export const IntroStep: React.FC<IntroStepProps> = ({ selectedRole, onSelectRole
         </span>
       </p>
 
-      <p className="text-foreground text-base leading-relaxed mb-6">
-        Você está pronto(a) para testar seu conhecimento sobre a Umbanda? Responda algumas perguntas
-        simples e descubra se você conhece os fundamentos da religião ou ainda tem muito para
-        aprender.
-      </p>
 
       <div className="flex flex-col items-center text-center mb-6">
         <p className="text-foreground text-lg font-bold leading-snug">
