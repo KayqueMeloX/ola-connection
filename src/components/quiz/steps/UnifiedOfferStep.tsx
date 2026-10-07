@@ -1,9 +1,40 @@
-import React, { useEffect, useRef } from "react";
-import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Mail, Sparkles, CheckCircle } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
 
 const CHECKOUT_URL = "https://pay.hotmart.com/G106783622L?checkoutMode=10";
+
+const feedbacks = [
+  {
+    name: "Mariana Silva",
+    role: "Iniciante no Terreiro",
+    comment: "Sensacional! Como iniciante, eu sempre me perdia nos nomes dos Orixás e suas regências. O mapa mental clareou tudo na minha mente em menos de 3 dias!",
+    rating: 5,
+    tag: "Verificada",
+  },
+  {
+    name: "Carlos Eduardo Mendes",
+    role: "Médium de Terreiro",
+    comment: "Material riquíssimo, direto ao ponto e muito visual. O guia de ervas e pontos cantados eu consulto toda semana no meu celular.",
+    rating: 5,
+    tag: "Verificado",
+  },
+  {
+    name: "Juliana Moreira",
+    role: "Praticante de Umbanda",
+    comment: "Vale cada centavo! Só os bônus com o manual de firmezas e banhos já valem muito mais do que os 20 euros cobrados. Recomendo de olhos fechados.",
+    rating: 5,
+    tag: "Verificada",
+  },
+  {
+    name: "Rodrigo Vasconcelos",
+    role: "Filho de Santo",
+    comment: "Muito didático e organizado! Tirou dúvidas que eu tinha há anos sobre hierarquia e linhas de trabalho. A melhor compra que fiz!",
+    rating: 5,
+    tag: "Verificado",
+  },
+];
 
 const mainFeatures = [
   { text: "APP Mapa Mental da Umbanda ™ (iOS e Android)" },
@@ -16,6 +47,18 @@ const mainFeatures = [
 export const UnifiedOfferStep: React.FC = () => {
   const videoRef = useRef<HTMLIFrameElement>(null);
   const { pauseForVideo, resumeAfterVideo } = useBackgroundMusic();
+  const [activeFeedback, setActiveFeedback] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-scroll loop para a direita a cada 3.5 segundos
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveFeedback((prev) => (prev + 1) % feedbacks.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   useEffect(() => {
     try {
@@ -77,6 +120,14 @@ export const UnifiedOfferStep: React.FC = () => {
       }
       window.location.href = CHECKOUT_URL;
     }
+  };
+
+  const nextFeedback = () => {
+    setActiveFeedback((prev) => (prev + 1) % feedbacks.length);
+  };
+
+  const prevFeedback = () => {
+    setActiveFeedback((prev) => (prev - 1 + feedbacks.length) % feedbacks.length);
   };
 
   return (
@@ -168,7 +219,98 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Caixa de Oferta Final / Preço */}
+      {/* 4. Carrossel de 4 Feedbacks com Rolagem Automática para a Direita */}
+      <div
+        className="w-full mb-8"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+      >
+        <div className="flex items-center justify-center gap-2 mb-1.5">
+          <MessageCircle className="w-5 h-5 text-accent" />
+          <h3 className="text-lg sm:text-xl font-black text-foreground">
+            O que dizem os Umbandistas que já usam:
+          </h3>
+        </div>
+        <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+          Avaliações reais de praticantes e iniciantes no terreiro.
+        </p>
+
+        <div className="w-full max-w-md mx-auto relative">
+          {/* Container com transição deslizante para a direita */}
+          <div className="overflow-hidden rounded-2xl">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeFeedback * 100}%)` }}
+            >
+              {feedbacks.map((f, idx) => (
+                <div key={idx} className="w-full shrink-0 px-1">
+                  <div className="bg-card rounded-2xl p-5 border border-border shadow-md text-left flex flex-col justify-between min-h-[160px]">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <p className="font-extrabold text-sm sm:text-base text-foreground">{f.name}</p>
+                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-green-500/15 text-green-700 flex items-center gap-0.5">
+                              <UserCheck className="w-3 h-3" />
+                              {f.tag}
+                            </span>
+                          </div>
+                          <p className="text-xs text-primary font-semibold">{f.role}</p>
+                        </div>
+                        <div className="flex gap-0.5 text-amber-500">
+                          {Array.from({ length: f.rating }).map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-current" />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground italic leading-relaxed">
+                        "{f.comment}"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Controles de Navegação e Indicadores (Bolinhas) */}
+          <div className="flex items-center justify-between mt-3 px-2">
+            <button
+              onClick={prevFeedback}
+              className="p-1.5 rounded-full bg-muted hover:bg-muted/80 text-foreground transition-all cursor-pointer"
+              aria-label="Feedback anterior"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+              {feedbacks.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveFeedback(i)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    activeFeedback === i ? "w-6 bg-primary" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  aria-label={`Ver feedback ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={nextFeedback}
+              className="p-1.5 rounded-full bg-muted hover:bg-muted/80 text-foreground transition-all cursor-pointer"
+              aria-label="Próximo feedback"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Caixa de Oferta Final / Preço */}
       <div className="w-full bg-gradient-to-b from-card via-card to-primary/5 rounded-3xl p-6 sm:p-8 border-2 border-primary shadow-2xl mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-4">
           <Star className="w-4 h-4 text-primary fill-current" />
