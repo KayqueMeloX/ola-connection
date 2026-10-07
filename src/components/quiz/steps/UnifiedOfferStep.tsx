@@ -212,11 +212,11 @@ export const UnifiedOfferStep: React.FC = () => {
         {/* Botão Comprar Agora */}
         <button
           onClick={handleCheckoutClick}
-          className="w-full py-3.5 sm:py-4 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer mt-4"
-          style={{ backgroundColor: "#4CAF82", color: "#ffffff" }}
+          className="w-full max-w-[260px] sm:max-w-[280px] mx-auto py-4 sm:py-5 px-4 bg-[#16a34a] hover:bg-[#15803d] text-white font-black text-lg sm:text-xl rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer mt-4"
+          style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
         >
-          <div className="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center shrink-0">
-            <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+          <div className="w-6 h-6 rounded-full bg-white/25 flex items-center justify-center shrink-0">
+            <Check className="w-4 h-4 text-white stroke-[3]" />
           </div>
           <span>Comprar Agora</span>
         </button>
