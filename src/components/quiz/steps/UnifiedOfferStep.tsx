@@ -135,7 +135,7 @@ export const UnifiedOfferStep: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
       {/* 1. Headline de Alto Impacto */}
-      <div className="w-full mb-8" style={{ paddingTop: "70px" }}>
+      <div className="w-full mb-8 pt-2">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-3">
           <Sparkles className="w-4 h-4 text-accent animate-pulse" />
           <span className="text-xs font-black text-primary uppercase tracking-wider">
