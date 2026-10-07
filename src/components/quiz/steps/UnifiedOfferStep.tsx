@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck } from "lucide-react";
+import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck, Timer, HelpCircle, ChevronDown } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
 
@@ -36,6 +36,25 @@ const feedbacks = [
   },
 ];
 
+const faqs = [
+  {
+    q: "Como vou receber o meu acesso?",
+    a: "O acesso chega imediatamente no seu e-mail logo após a confirmação do pagamento pela Hotmart. Você recebe o link para baixar o App e os arquivos em PDF.",
+  },
+  {
+    q: "Funciona em qualquer celular (Android e iPhone)?",
+    a: "Sim! O Aplicativo roda perfeitamente em todos os celulares Android e iPhone (iOS), além de computadores e tablets.",
+  },
+  {
+    q: "O pagamento é único ou tem mensalidade?",
+    a: "É um pagamento único de apenas € 19,90. Você não paga mensalidades e tem acesso vitalício a todo o conteúdo e atualizações.",
+  },
+  {
+    q: "E se eu não gostar do conteúdo?",
+    a: "Você tem 60 dias de Garantia Incondicional. Se por qualquer motivo achar que o material não te ajudou, basta enviar uma mensagem e devolvemos 100% do seu dinheiro sem burocracia.",
+  },
+];
+
 const mainFeatures = [
   { text: "APP Mapa Mental da Umbanda ™ (iOS e Android)" },
   { text: "Acesso Vitalício sem qualquer mensalidade" },
@@ -49,6 +68,22 @@ export const UnifiedOfferStep: React.FC = () => {
   const { pauseForVideo, resumeAfterVideo } = useBackgroundMusic();
   const [activeFeedback, setActiveFeedback] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [timeLeft, setTimeLeft] = useState(899); // 14:59
+
+  // Cronômetro regressivo
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTimer = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
 
   // Auto-scroll loop para a direita a cada 3.5 segundos
   useEffect(() => {
@@ -128,6 +163,10 @@ export const UnifiedOfferStep: React.FC = () => {
 
   const prevFeedback = () => {
     setActiveFeedback((prev) => (prev - 1 + feedbacks.length) % feedbacks.length);
+  };
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -312,10 +351,11 @@ export const UnifiedOfferStep: React.FC = () => {
 
       {/* 5. Caixa de Oferta Final / Preço */}
       <div className="w-full bg-gradient-to-b from-card via-card to-primary/5 rounded-3xl p-6 sm:p-8 border-2 border-primary shadow-2xl mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-4">
-          <Star className="w-4 h-4 text-primary fill-current" />
-          <span className="text-xs font-black text-primary tracking-wide uppercase">
-            OFERTA PROMOCIONAL HOJE
+        {/* Temporizador de Escassez / Urgência */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 mb-3">
+          <Timer className="w-4 h-4 animate-pulse" />
+          <span className="text-xs font-black tracking-wide uppercase">
+            DESCONTO RESERVADO: <span className="font-mono text-sm">{formatTimer(timeLeft)}</span>
           </span>
         </div>
 
@@ -379,6 +419,45 @@ export const UnifiedOfferStep: React.FC = () => {
           <p className="text-xs text-muted-foreground leading-relaxed">
             <strong className="text-foreground font-bold">Garantia Incondicional de 60 Dias:</strong> Se não gostar ou achar que não agregou à sua jornada espiritual, devolvemos 100% do seu dinheiro.
           </p>
+        </div>
+      </div>
+
+      {/* 6. FAQ - Perguntas Frequentes em Acordeão */}
+      <div className="w-full mb-10 text-left max-w-md mx-auto">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <HelpCircle className="w-5 h-5 text-primary" />
+          <h3 className="text-lg sm:text-xl font-black text-foreground text-center">
+            Perguntas Frequentes
+          </h3>
+        </div>
+
+        <div className="space-y-3">
+          {faqs.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div
+                key={idx}
+                className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden transition-all"
+              >
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full p-4 text-left font-bold text-sm sm:text-base text-foreground flex items-center justify-between gap-3 cursor-pointer hover:bg-muted/30 transition-colors"
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                      isOpen ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </button>
+                {isOpen && (
+                  <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-border/40 animate-in fade-in duration-200">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
