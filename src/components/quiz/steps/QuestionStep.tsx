@@ -44,15 +44,38 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
         )}
       </div>
 
-      {/* Options list - Formatted as elegant cards */}
+      {/* Options list */}
       <div
         className={cn(
           "flex flex-col mb-6",
-          question.questionImage ? "gap-3 sm:gap-3.5" : "gap-4 sm:gap-4.5"
+          question.questionImage ? "gap-2.5 sm:gap-3" : "gap-4 sm:gap-4.5"
         )}
       >
         {question.options.map((opt, idx) => {
           const isSelected = selectedAnswer === idx;
+
+          if (question.optionStyle === "solid") {
+            const solidBg = isSelected
+              ? "bg-primary text-primary-foreground ring-4 ring-primary/30 shadow-lg scale-[1.01]"
+              : "bg-umbanda-red text-white hover:bg-umbanda-red/90 shadow-md";
+
+            return (
+              <button
+                key={idx}
+                onClick={() => onSelectAnswer(idx)}
+                disabled={selectedAnswer !== null}
+                className={cn(
+                  "w-full py-4 sm:py-4.5 px-6 rounded-2xl text-center font-bold text-base sm:text-lg transition-all duration-300",
+                  "flex items-center justify-center gap-3",
+                  solidBg,
+                  selectedAnswer === null && "hover:scale-[1.02] active:scale-[0.99]"
+                )}
+              >
+                <span>{opt.text}</span>
+              </button>
+            );
+          }
+
           const borderBg = isSelected
             ? "border-primary bg-primary/5 ring-2 ring-primary/30 shadow-md"
             : "border-border/80 hover:border-primary/50 bg-card shadow-sm hover:bg-muted/30";
@@ -63,19 +86,19 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
               onClick={() => onSelectAnswer(idx)}
               disabled={selectedAnswer !== null}
               className={cn(
-                "w-full min-h-[62px] sm:min-h-[68px] p-3.5 sm:p-4 rounded-2xl border-2 text-left font-semibold transition-all duration-300",
-                "flex items-center gap-3.5",
+                "w-full min-h-[64px] sm:min-h-[72px] p-3.5 sm:p-4 rounded-2xl border-2 text-left font-semibold transition-all duration-300",
+                "flex items-center gap-4",
                 borderBg,
                 selectedAnswer === null && "hover:scale-[1.01] active:scale-[0.99]"
               )}
             >
               {opt.emoji && (
-                <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center">
-                  <span className="text-2xl sm:text-3xl">{opt.emoji}</span>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
+                  <span className="text-3xl sm:text-4xl">{opt.emoji}</span>
                 </div>
               )}
               {opt.image && !opt.emoji && (
-                <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
                   <img
                     src={opt.image}
                     alt={opt.text}

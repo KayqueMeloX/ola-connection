@@ -32,11 +32,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 2,
     question: "Você conhece as principais entidades espirituais que trabalham nos terreiros?",
     questionImage: "/assets/question-entidades-DMFtjsZs.png",
+    optionStyle: "solid",
     options: [
-      { text: "Sim, todas!", emoji: "✨" },
-      { text: "Conheço algumas.", emoji: "🌿" },
-      { text: "Ainda estou aprendendo.", emoji: "📖" },
-      { text: "Não conheço nenhuma!", emoji: "❓" },
+      { text: "Sim, todas!" },
+      { text: "Conheço algumas." },
+      { text: "Ainda estou aprendendo." },
+      { text: "Não conheço nenhuma!" },
     ],
     correctAnswer: 0,
     explanation:
@@ -46,10 +47,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 3,
     question: "O que são pontos riscados na Umbanda?",
     questionImage: "/assets/question-pontos-riscados-DSbgj6ry.png",
+    optionStyle: "solid",
     options: [
-      { text: "Desenhos para identificar entidades", emoji: "⚡" },
-      { text: "Um tipo de oferenda", emoji: "🕯️" },
-      { text: "Não sei, mas estou curioso!", emoji: "💡" },
+      { text: "Desenhos para identificar entidades" },
+      { text: "Um tipo de oferenda" },
+      { text: "Não sei, mas estou curioso!" },
     ],
     correctAnswer: 0,
     explanation:
@@ -59,10 +61,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 4,
     question: "Você sente que tem dificuldades para entender ou organizar os aprendizados sobre a Umbanda?",
     questionImage: "/assets/question-dificuldades-Dl1jNYxa.gif",
+    optionStyle: "solid",
     options: [
-      { text: "Sim, sinto falta de um material organizado.", emoji: "📚" },
-      { text: "Um pouco, mas consigo aprender.", emoji: "🧠" },
-      { text: "Não, eu aprendo facilmente.", emoji: "🎯" },
+      { text: "Sim, sinto falta de um material organizado." },
+      { text: "Um pouco, mas consigo aprender." },
+      { text: "Não, eu aprendo facilmente." },
     ],
     correctAnswer: 0,
     explanation:
@@ -85,10 +88,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 6,
     question: "Você conhece os principais arquétipos de cada Orixá?",
     questionImage: "/assets/question-orixas-CFli7e6m.png",
+    optionStyle: "solid",
     options: [
-      { text: "Sim, conheço e entendo.", emoji: "👑" },
-      { text: "Conheço alguns, mas ainda tenho dúvidas.", emoji: "🌊" },
-      { text: "Não, gostaria de aprender mais.", emoji: "🏹" },
+      { text: "Sim, conheço e entendo." },
+      { text: "Conheço alguns, mas ainda tenho dúvidas." },
+      { text: "Não, gostaria de aprender mais." },
     ],
     correctAnswer: 0,
     explanation:
@@ -98,10 +102,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 7,
     question: "Como você se sente em relação aos rituais básicos da Umbanda?",
     questionImage: "/assets/question-rituais-CbJQp2Lx.png",
+    optionStyle: "solid",
     options: [
-      { text: "Confiante, já sei como realizar.", emoji: "🛡️" },
-      { text: "Um pouco inseguro(a), mas gostaria de aprender.", emoji: "🕊️" },
-      { text: "Perdido(a), preciso de ajuda.", emoji: "🧭" },
+      { text: "Confiante, já sei como realizar." },
+      { text: "Um pouco inseguro(a), mas gostaria de aprender." },
+      { text: "Perdido(a), preciso de ajuda." },
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +116,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 8,
     question: "Você sabe como montar um altar simples para conectar-se aos Orixás em casa?",
     questionImage: "/assets/question-altar-CvW1ySTd.png",
+    optionStyle: "solid",
     options: [
-      { text: "Sim, já tenho um altar.", emoji: "🕯️" },
-      { text: "Tenho dúvidas sobre como fazer corretamente.", emoji: "🌿" },
-      { text: "Não, mas adoraria aprender.", emoji: "✨" },
+      { text: "Sim, já tenho um altar." },
+      { text: "Tenho dúvidas sobre como fazer corretamente." },
+      { text: "Não, mas adoraria aprender." },
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +130,11 @@ export const quizQuestions: QuizQuestion[] = [
     id: 9,
     question: "Você entende como os Orixás se relacionam com os elementos da natureza?",
     questionImage: "/assets/question-elementos-DQvYZev0.png",
+    optionStyle: "solid",
     options: [
-      { text: "Sim, conheço essa relação profundamente.", emoji: "🔥" },
-      { text: "Conheço um pouco, mas ainda tenho muito a aprender.", emoji: "💧" },
-      { text: "Não, mas acho fascinante e quero saber mais.", emoji: "🌍" },
+      { text: "Sim, conheço essa relação profundamente." },
+      { text: "Conheço um pouco, mas ainda tenho muito a aprender." },
+      { text: "Não, mas acho fascinante e quero saber mais." },
     ],
     correctAnswer: 0,
     explanation:
@@ -149,7 +156,7 @@ export const getScoreResult = (score: number, total: number) => {
     return {
       title: "Muito bem! Você está no caminho certo!",
       message:
-        "Você tem uma boa base de conhecimento. O APP Mapa Mental da Umbanda pode ajudá-lo a aprender ainda mais!",
+        "Você tem uma base de conhecimento sólida. O APP Mapa Mental da Umbanda pode ajudá-lo a aprender ainda mais!",
       emoji: "✨",
       label: "Bom",
     };
