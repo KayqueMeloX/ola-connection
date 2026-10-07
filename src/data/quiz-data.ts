@@ -31,6 +31,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 2,
     question: "Você conhece as principais entidades espirituais que trabalham nos terreiros?",
+    questionImage: "/assets/question-entidades-DMFtjsZs.png",
     options: [
       { text: "Sim, todas!", emoji: "✨" },
       { text: "Conheço algumas.", emoji: "🌿" },
@@ -44,6 +45,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 3,
     question: "O que são pontos riscados na Umbanda?",
+    questionImage: "/assets/question-pontos-riscados-DSbgj6ry.png",
     options: [
       { text: "Desenhos para identificar entidades", emoji: "⚡" },
       { text: "Um tipo de oferenda", emoji: "🕯️" },
@@ -56,6 +58,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 4,
     question: "Você sente que tem dificuldades para entender ou organizar os aprendizados sobre a Umbanda?",
+    questionImage: "/assets/question-dificuldades-Dl1jNYxa.gif",
     options: [
       { text: "Sim, sinto falta de um material organizado.", emoji: "📚" },
       { text: "Um pouco, mas consigo aprender.", emoji: "🧠" },
@@ -68,6 +71,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 5,
     question: "Você gostaria de ter acesso a um APLICATIVO que explica de forma prática e visual todos os fundamentos da Umbanda?",
+    questionImage: "/assets/question-aplicativo-DY88zYaI.png",
     options: [
       { text: "Sim, seria incrível!", image: "/assets/result-option-sim-CeTr9lC_.png" },
       { text: "Talvez, dependendo do material.", image: "/assets/option-talvez-DPJvBUqf.png" },
@@ -80,6 +84,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 6,
     question: "Você conhece os principais arquétipos de cada Orixá?",
+    questionImage: "/assets/question-orixas-CFli7e6m.png",
     options: [
       { text: "Sim, conheço e entendo.", emoji: "👑" },
       { text: "Conheço alguns, mas ainda tenho dúvidas.", emoji: "🌊" },
@@ -92,6 +97,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 7,
     question: "Como você se sente em relação aos rituais básicos da Umbanda?",
+    questionImage: "/assets/question-rituais-CbJQp2Lx.png",
     options: [
       { text: "Confiante, já sei como realizar.", emoji: "🛡️" },
       { text: "Um pouco inseguro(a), mas gostaria de aprender.", emoji: "🕊️" },
@@ -104,6 +110,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 8,
     question: "Você sabe como montar um altar simples para conectar-se aos Orixás em casa?",
+    questionImage: "/assets/question-altar-CvW1ySTd.png",
     options: [
       { text: "Sim, já tenho um altar.", emoji: "🕯️" },
       { text: "Tenho dúvidas sobre como fazer corretamente.", emoji: "🌿" },
@@ -116,6 +123,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 9,
     question: "Você entende como os Orixás se relacionam com os elementos da natureza?",
+    questionImage: "/assets/question-elementos-DQvYZev0.png",
     options: [
       { text: "Sim, conheço essa relação profundamente.", emoji: "🔥" },
       { text: "Conheço um pouco, mas ainda tenho muito a aprender.", emoji: "💧" },

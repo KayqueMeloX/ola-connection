@@ -28,14 +28,24 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   return (
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Question Text */}
-      <div className="mb-6 pt-2">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center leading-snug px-2">
+      <div className="mb-2">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground text-center leading-snug px-1 mb-2">
           {question.question}
         </h2>
+        {question.questionImage && (
+          <div className="flex justify-center mb-2.5">
+            <img
+              src={question.questionImage}
+              alt="Ilustração da pergunta"
+              decoding="async"
+              className="h-24 sm:h-28 md:h-32 w-auto max-w-[200px] object-contain drop-shadow-sm"
+            />
+          </div>
+        )}
       </div>
 
-      {/* Options list - Formatted identically to Question 1 */}
-      <div className="flex flex-col gap-3.5 sm:gap-4 mb-6">
+      {/* Options list - Formatted as elegant cards */}
+      <div className="flex flex-col gap-2.5 sm:gap-3 mb-4">
         {question.options.map((opt, idx) => {
           const isSelected = selectedAnswer === idx;
           const borderBg = isSelected
@@ -48,19 +58,19 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
               onClick={() => onSelectAnswer(idx)}
               disabled={selectedAnswer !== null}
               className={cn(
-                "w-full min-h-[68px] sm:min-h-[76px] p-4 rounded-2xl border-2 text-left font-semibold transition-all duration-300",
-                "flex items-center gap-4",
+                "w-full min-h-[58px] sm:min-h-[64px] p-3 sm:p-3.5 rounded-2xl border-2 text-left font-semibold transition-all duration-300",
+                "flex items-center gap-3.5",
                 borderBg,
                 selectedAnswer === null && "hover:scale-[1.01] active:scale-[0.99]"
               )}
             >
               {opt.emoji && (
-                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
-                  <span className="text-3xl sm:text-4xl">{opt.emoji}</span>
+                <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 flex items-center justify-center">
+                  <span className="text-2xl sm:text-3xl">{opt.emoji}</span>
                 </div>
               )}
               {opt.image && !opt.emoji && (
-                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 flex items-center justify-center">
                   <img
                     src={opt.image}
                     alt={opt.text}
@@ -69,7 +79,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                   />
                 </div>
               )}
-              <span className="text-foreground flex-1 text-base sm:text-lg font-bold leading-snug">
+              <span className="text-foreground flex-1 text-sm sm:text-base font-bold leading-snug">
                 {opt.text}
               </span>
             </button>
