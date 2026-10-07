@@ -92,7 +92,7 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
       {/* Main Container */}
       <div
         className={`flex-1 flex flex-col items-center px-4 max-w-lg mx-auto w-full pb-8 ${
-          isOfferPage ? "pt-28 sm:pt-32" : "pt-52 md:pt-48"
+          isOfferPage ? "pt-36 sm:pt-40" : "pt-52 md:pt-48"
         }`}
       >
         {children}
