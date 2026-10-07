@@ -28,24 +28,29 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   return (
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Question Text */}
-      <div className="mb-3">
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground text-center leading-snug px-1 mb-2.5">
+      <div className={cn("text-center px-1", question.questionImage ? "mb-2.5" : "mb-5 sm:mb-6 pt-2")}>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-snug">
           {question.question}
         </h2>
         {question.questionImage && (
-          <div className="flex justify-center mb-3">
+          <div className="flex justify-center mt-2.5 mb-1.5">
             <img
               src={question.questionImage}
               alt="Ilustração da pergunta"
               decoding="async"
-              className="h-44 sm:h-52 md:h-60 w-auto max-w-[320px] object-contain drop-shadow-md"
+              className="h-36 sm:h-40 md:h-48 w-auto max-w-[270px] object-contain drop-shadow-md"
             />
           </div>
         )}
       </div>
 
       {/* Options list - Formatted as elegant cards */}
-      <div className="flex flex-col gap-3 sm:gap-3.5 mb-6">
+      <div
+        className={cn(
+          "flex flex-col mb-6",
+          question.questionImage ? "gap-3 sm:gap-3.5" : "gap-4 sm:gap-4.5"
+        )}
+      >
         {question.options.map((opt, idx) => {
           const isSelected = selectedAnswer === idx;
           const borderBg = isSelected
