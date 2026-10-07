@@ -11,6 +11,7 @@ import { HowToReceiveStep } from "@/components/quiz/steps/HowToReceiveStep";
 import { BonusStep } from "@/components/quiz/steps/BonusStep";
 import { CheckoutOfferStep } from "@/components/quiz/steps/CheckoutOfferStep";
 import { quizQuestions } from "@/data/quiz-data";
+import { trackEvent } from "@/lib/analytics";
 
 export const Route = createFileRoute("/")({
   component: QuizApp,
@@ -31,19 +32,44 @@ function QuizApp() {
   const [selectedRole, setSelectedRole] = useState<"iniciante" | "umbandista" | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [spiritualBalance, setSpiritualBalance] = useState(0);
   const [previousBalance, setPreviousBalance] = useState(0);
 
   const totalSteps = 16;
 
+  // Track initial page view
+  useEffect(() => {
+    trackEvent("page_view", "intro", 1);
+  }, []);
+
+  // Track each step transition
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentStep, currentQuestionIndex]);
+
+    if (currentStep === "quiz") {
+      trackEvent("question_view", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
+        questionId: quizQuestions[currentQuestionIndex]?.id,
+        questionText: quizQuestions[currentQuestionIndex]?.question,
+      });
+    } else if (currentStep === "analyzing") {
+      trackEvent("analyzing_view", "analyzing", 12);
+    } else if (currentStep === "result") {
+      trackEvent("result_view", "result", 13, { score });
+    } else if (currentStep === "offer") {
+      trackEvent("offer_intro_view", "offer_intro", 14);
+    } else if (currentStep === "howToReceive") {
+      trackEvent("how_to_receive_view", "how_to_receive", 15);
+    } else if (currentStep === "bonus") {
+      trackEvent("bonus_view", "bonus", 16);
+    } else if (currentStep === "frontDuplo") {
+      trackEvent("checkout_step_view", "checkout_step", 17);
+    }
+  }, [currentStep, currentQuestionIndex, score]);
 
   const handleSelectRole = (role: "iniciante" | "umbandista") => {
     setSelectedRole(role);
+    trackEvent("role_selected", "role_selected", 2, { role });
     setPreviousBalance(spiritualBalance);
     setSpiritualBalance((prev) => prev + 20);
     setTimeout(() => {
@@ -55,9 +81,17 @@ function QuizApp() {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
 
-    if (index === quizQuestions[currentQuestionIndex].correctAnswer) {
+    const isCorrect = index === quizQuestions[currentQuestionIndex].correctAnswer;
+    if (isCorrect) {
       setScore((prev) => prev + 1);
     }
+
+    trackEvent("question_answered", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
+      questionId: quizQuestions[currentQuestionIndex]?.id,
+      answerIndex: index,
+      answerText: quizQuestions[currentQuestionIndex]?.options[index]?.text,
+      isCorrect,
+    });
 
     setTimeout(() => {
       setPreviousBalance(spiritualBalance);

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
+import { trackEvent } from "@/lib/analytics";
 
 const mainFeatures = [
   { text: "APP Mapa Mental da Umbanda ™" },
@@ -108,7 +109,12 @@ export const CheckoutOfferStep: React.FC = () => {
         href="https://pay.hotmart.com/G106783622L?checkoutMode=10"
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => pauseForVideo()}
+        onClick={() => {
+          pauseForVideo();
+          trackEvent("checkout_click", "checkout_click", 18, {
+            url: "https://pay.hotmart.com/G106783622L?checkoutMode=10",
+          });
+        }}
         className="w-full max-w-md mb-4 py-4 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-extrabold text-base md:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale-strong flex items-center justify-center gap-3"
       >
         <div className="w-12 h-12 bg-[#6BC9A0] rounded-xl flex items-center justify-center flex-shrink-0">
