@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Volume2 } from "lucide-react";
 import { QuizQuestion } from "@/data/quiz-data";
 import { cn } from "@/lib/utils";
 
@@ -28,26 +27,6 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
 
   return (
     <div className="flex-1 flex flex-col w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Pai Oxalá guide header */}
-      <div className="flex flex-col items-center mt-4 mb-4">
-        <div className="relative">
-          <img
-            src="/assets/personagem-guia-3d-C5LUUTbc.png"
-            alt="Pai Oxalá"
-            decoding="async"
-            className="w-24 h-24 object-contain rounded-full shadow-lg"
-          />
-          <div className="absolute -bottom-1 -right-1 bg-primary rounded-full p-1.5 shadow-md">
-            <Volume2 className="w-3 h-3 text-white" />
-          </div>
-        </div>
-        <div className="mt-2 px-4 py-1.5 bg-gradient-to-r from-blue-500/20 to-blue-400/10 rounded-full border border-blue-400/40 shadow-sm">
-          <span className="text-sm font-semibold text-blue-600 tracking-wide">
-            ✨ Pai Oxalá ✨
-          </span>
-        </div>
-      </div>
-
       {/* Question Text */}
       <div className="mb-4">
         <h2 className="text-xl font-bold text-foreground text-center mb-4">{question.question}</h2>
