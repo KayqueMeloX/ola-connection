@@ -208,6 +208,18 @@ export const UnifiedOfferStep: React.FC = () => {
             <span className="text-4xl sm:text-5xl font-black text-green-600 tracking-tight">19,90</span>
           </div>
         </div>
+
+        {/* Botão Comprar Agora */}
+        <button
+          onClick={handleCheckoutClick}
+          className="w-full py-3.5 sm:py-4 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer mt-4"
+          style={{ backgroundColor: "#4CAF82", color: "#ffffff" }}
+        >
+          <div className="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center shrink-0">
+            <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+          </div>
+          <span>Comprar Agora</span>
+        </button>
       </div>
 
       {/* 2. Primeiro Vídeo (Apresentação do App) */}
