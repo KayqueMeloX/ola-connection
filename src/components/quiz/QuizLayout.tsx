@@ -119,9 +119,9 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
       {/* Main Container */}
       <div
         className={`flex-1 flex flex-col items-center px-4 max-w-lg mx-auto w-full pb-8 ${
-          isOfferPage ? "pt-28" : "pt-28 sm:pt-32"
+          isOfferPage ? "pt-28" : "pt-32 sm:pt-36"
         }`}
-        style={{ paddingTop: isOfferPage ? "118px" : "110px" }}
+        style={{ paddingTop: isOfferPage ? "118px" : "135px" }}
       >
         {children}
       </div>
