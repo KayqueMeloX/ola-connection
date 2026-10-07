@@ -38,14 +38,22 @@ function QuizApp() {
 
   const totalSteps = 16;
 
+  const scrollToTop = () => {
+    try {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    } catch {}
+  };
+
   // Track initial page view
   useEffect(() => {
     trackEvent("page_view", "intro", 1);
   }, []);
 
-  // Track each step transition
+  // Track each step transition and ensure instant scroll to top
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
 
     if (currentStep === "quiz") {
       trackEvent("question_view", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
@@ -73,6 +81,7 @@ function QuizApp() {
     setPreviousBalance(spiritualBalance);
     setSpiritualBalance((prev) => prev + 20);
     setTimeout(() => {
+      scrollToTop();
       setCurrentStep("quiz");
     }, 350);
   };
@@ -96,9 +105,7 @@ function QuizApp() {
     setTimeout(() => {
       setPreviousBalance(spiritualBalance);
       setSpiritualBalance((prev) => prev + 20);
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+      scrollToTop();
 
       if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);

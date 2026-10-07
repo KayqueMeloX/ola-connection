@@ -27,7 +27,11 @@ export const CheckoutOfferStep: React.FC = () => {
   const { pauseForVideo } = useBackgroundMusic();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    try {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    } catch {}
   }, []);
 
   return (

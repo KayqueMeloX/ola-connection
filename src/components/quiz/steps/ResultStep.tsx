@@ -193,7 +193,11 @@ export const ResultStep: React.FC<ResultStepProps> = ({ score, totalQuestions, o
   const targetScore = 60; // 60% default score gauge
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    try {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    } catch {}
     cleanupFireworksRef.current = launchFireworks();
 
     const startTime = Date.now();
