@@ -92,6 +92,15 @@ export const trackEvent = (
     }
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+
+    // Dispatch to Meta Pixel fbq if present
+    if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", eventName, {
+        stepName,
+        stepNumber,
+        ...data,
+      });
+    }
   } catch (err) {
     console.error("Tracking error:", err);
   }
