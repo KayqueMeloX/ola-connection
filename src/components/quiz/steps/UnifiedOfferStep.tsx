@@ -182,13 +182,16 @@ export const UnifiedOfferStep: React.FC = () => {
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
       {/* 1. Badge 100% + Headline + Preço Inicial */}
       <div className="w-full mb-6 pt-1 max-w-md mx-auto">
-        <div className="inline-flex items-center justify-center px-3 py-0.5 rounded-full bg-red-500 text-white font-black text-[11px] mb-3 shadow-sm">
+        <div
+          className="inline-flex items-center justify-center px-3.5 py-1 rounded-full font-black text-xs mb-3 shadow-sm"
+          style={{ backgroundColor: "#ef4444", color: "#ffffff" }}
+        >
           100%
         </div>
 
         <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground leading-snug mb-4">
-          <span className="text-red-500 font-extrabold uppercase">SOMENTE HOJE:</span> Você vai evoluir investindo no{" "}
-          <span className="text-red-500 font-extrabold">Aplicativo do Mapa Mental da Umbanda</span> com o{" "}
+          <span style={{ color: "#ef4444" }} className="font-extrabold uppercase">SOMENTE HOJE:</span> Você vai evoluir investindo no{" "}
+          <span style={{ color: "#ef4444" }} className="font-extrabold">Aplicativo do Mapa Mental da Umbanda</span> com o{" "}
           <span className="underline font-bold decoration-foreground decoration-2">material completo</span> pelo valor promocional:
         </h1>
 
@@ -237,12 +240,15 @@ export const UnifiedOfferStep: React.FC = () => {
       <div className="w-full max-w-md mx-auto mb-8">
         <p className="text-base sm:text-lg font-bold text-foreground leading-snug mb-4">
           Além disso, você receberá também{" "}
-          <strong className="text-red-500 font-black uppercase">10 BÔNUS ESPECIAIS</strong> para melhorar o seu aprendizado e fortalecer a sua fé.
+          <strong style={{ color: "#ef4444" }} className="font-black uppercase">10 BÔNUS ESPECIAIS</strong> para melhorar o seu aprendizado e fortalecer a sua fé.
         </p>
 
         {/* Badge "O MAIS VENDIDO" */}
-        <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-zinc-800 text-white font-black text-xs uppercase tracking-wider mb-4 shadow-md">
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+        <div
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-black text-xs uppercase tracking-wider mb-4 shadow-md"
+          style={{ backgroundColor: "#27272a", color: "#ffffff" }}
+        >
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#22c55e" }} />
           <span>O MAIS VENDIDO</span>
         </div>
 
