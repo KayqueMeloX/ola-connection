@@ -97,6 +97,22 @@ function QuizApp() {
     }, 450);
   };
 
+  const handleHeaderCheckoutClick = () => {
+    trackEvent("checkout_click", "checkout_click", 8, {
+      source: "sticky_header",
+      price: 19.9,
+      currency: "EUR",
+    });
+
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "InitiateCheckout", {
+        value: 19.9,
+        currency: "EUR",
+        content_name: "Mapa Mental da Umbanda + 10 Bonus",
+      });
+    }
+  };
+
   const calculateCurrentStepNumber = () => {
     switch (currentStep) {
       case "intro":
@@ -121,6 +137,8 @@ function QuizApp() {
         previousBalance={previousBalance}
         hideLogo={currentStep === "analyzing"}
         showProgress={currentStep !== "offer"}
+        isOfferPage={currentStep === "offer"}
+        onCheckoutClick={handleHeaderCheckoutClick}
       >
         {currentStep === "intro" && (
           <IntroStep selectedRole={selectedRole} onSelectRole={handleSelectRole} />
