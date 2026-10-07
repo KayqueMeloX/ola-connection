@@ -52,10 +52,6 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
               </div>
               <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 drop-shadow-sm" strokeWidth={2.5} />
             </a>
-            <div className="flex items-center justify-center gap-1.5 mt-1.5 text-[11px] text-muted-foreground font-medium">
-              <span className="text-primary">🔒</span>
-              <span>Pagamento Seguro Hotmart • Acesso Imediato</span>
-            </div>
           </div>
         ) : (
           <>
