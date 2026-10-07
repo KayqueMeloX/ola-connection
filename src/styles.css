@@ -19,3 +19,41 @@ div:has(> a[href*="lovable.app"]) {
   width: 0 !important;
   overflow: hidden !important;
 }
+
+/* Custom Utility Overrides and Helpers */
+.text-red-500, .text-danger {
+  color: #ef4444 !important;
+}
+.line-through {
+  text-decoration: line-through !important;
+}
+.bg-green-600 {
+  background-color: #16a34a !important;
+}
+.bg-green-700 {
+  background-color: #15803d !important;
+}
+.text-green-600 {
+  color: #16a34a !important;
+}
+.pt-36 {
+  padding-top: 9rem !important;
+}
+.pt-40 {
+  padding-top: 10rem !important;
+}
+.pt-44 {
+  padding-top: 11rem !important;
+}
+.pt-48 {
+  padding-top: 12rem !important;
+}
+.pt-52 {
+  padding-top: 13rem !important;
+}
+.pt-56 {
+  padding-top: 14rem !important;
+}
+.pt-60 {
+  padding-top: 15rem !important;
+}

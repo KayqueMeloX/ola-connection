@@ -135,7 +135,7 @@ export const UnifiedOfferStep: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
       {/* 1. Headline de Alto Impacto */}
-      <div className="w-full mb-8 pt-10 sm:pt-14 mt-2">
+      <div className="w-full mb-8" style={{ paddingTop: "70px" }}>
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-3">
           <Sparkles className="w-4 h-4 text-accent animate-pulse" />
           <span className="text-xs font-black text-primary uppercase tracking-wider">
@@ -232,7 +232,15 @@ export const UnifiedOfferStep: React.FC = () => {
           </h3>
         </div>
         <p className="text-sm sm:text-base text-muted-foreground mb-6">
-          Mais de <span className="line-through font-bold text-red-500 text-base">€ 130,00</span> em materiais que você recebe <strong className="text-green-600 font-black uppercase">100% GRÁTIS</strong> no seu combo!
+          Mais de{" "}
+          <span className="font-bold text-base" style={{ color: "#ef4444", textDecoration: "line-through" }}>
+            € 130,00
+          </span>{" "}
+          em materiais que você recebe{" "}
+          <strong className="font-black uppercase" style={{ color: "#16a34a" }}>
+            100% GRÁTIS
+          </strong>{" "}
+          no seu combo!
         </p>
 
         <div className="w-full max-w-md mx-auto space-y-6 mb-8">
@@ -251,12 +259,18 @@ export const UnifiedOfferStep: React.FC = () => {
               <div className="pt-3 border-t border-border/70 flex items-center justify-between gap-2 px-1">
                 <div className="flex flex-col">
                   <span className="text-[10px] uppercase font-bold text-muted-foreground">Valor individual:</span>
-                  <span className="text-base sm:text-lg font-black text-red-500 line-through decoration-2">
+                  <span
+                    className="text-base sm:text-lg font-black"
+                    style={{ color: "#ef4444", textDecoration: "line-through" }}
+                  >
                     {bonus.normalPrice}
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md uppercase tracking-wider">
-                  <Check className="w-4 h-4 text-white stroke-[3]" />
+                <div
+                  className="flex items-center gap-1.5 font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md uppercase tracking-wider"
+                  style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
+                >
+                  <Check className="w-4 h-4 stroke-[3]" style={{ color: "#ffffff" }} />
                   <span>100% GRÁTIS</span>
                 </div>
               </div>
@@ -330,7 +344,10 @@ export const UnifiedOfferStep: React.FC = () => {
         {/* Preço */}
         <div className="my-6 p-4 rounded-2xl bg-muted/40 border border-border">
           <p className="text-sm text-muted-foreground mb-1">
-            De: <span className="line-through text-red-500 font-bold">€ 67,00</span>
+            De:{" "}
+            <span className="font-bold" style={{ color: "#ef4444", textDecoration: "line-through" }}>
+              € 67,00
+            </span>
           </p>
           <div className="flex items-baseline justify-center gap-2">
             <span className="text-sm font-bold text-foreground">Por apenas</span>
