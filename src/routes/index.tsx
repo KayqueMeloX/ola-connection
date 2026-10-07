@@ -68,13 +68,17 @@ function QuizApp() {
   }, [currentStep, currentQuestionIndex, score]);
 
   const handleSelectRole = (role: "iniciante" | "umbandista") => {
+    if (selectedRole !== null) return;
     setSelectedRole(role);
     trackEvent("role_selected", "role_selected", 2, { role });
     setPreviousBalance(spiritualBalance);
     setSpiritualBalance((prev) => prev + 20);
     setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
       setCurrentStep("quiz");
-    }, 350);
+    }, 300);
   };
 
   const handleSelectAnswer = (index: number) => {

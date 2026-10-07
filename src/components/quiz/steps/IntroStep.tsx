@@ -45,10 +45,12 @@ export const IntroStep: React.FC<IntroStepProps> = ({ selectedRole, onSelectRole
 
       <div className="flex gap-4 mb-8 w-full justify-center">
         <button
+          type="button"
           onClick={() => onSelectRole("iniciante")}
-          className={`quiz-card flex flex-col items-center gap-4 w-full max-w-[180px] ${
-            selectedRole === "iniciante" ? "selected" : ""
-          }`}
+          disabled={selectedRole !== null}
+          className={`quiz-card flex flex-col items-center gap-4 w-full max-w-[180px] transition-all duration-200 cursor-pointer ${
+            selectedRole === "iniciante" ? "selected ring-4 ring-primary/40 scale-[1.02]" : ""
+          } ${selectedRole !== null ? "pointer-events-none" : "active:scale-95"}`}
         >
           <div className="w-full aspect-square rounded-xl overflow-hidden bg-muted">
             <img
@@ -57,14 +59,16 @@ export const IntroStep: React.FC<IntroStepProps> = ({ selectedRole, onSelectRole
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="text-xl font-medium text-foreground">Iniciante</span>
+          <span className="text-xl font-bold text-foreground">Iniciante</span>
         </button>
 
         <button
+          type="button"
           onClick={() => onSelectRole("umbandista")}
-          className={`quiz-card flex flex-col items-center gap-4 w-full max-w-[180px] ${
-            selectedRole === "umbandista" ? "selected" : ""
-          }`}
+          disabled={selectedRole !== null}
+          className={`quiz-card flex flex-col items-center gap-4 w-full max-w-[180px] transition-all duration-200 cursor-pointer ${
+            selectedRole === "umbandista" ? "selected ring-4 ring-primary/40 scale-[1.02]" : ""
+          } ${selectedRole !== null ? "pointer-events-none" : "active:scale-95"}`}
         >
           <div className="w-full aspect-square rounded-xl overflow-hidden bg-muted">
             <img
@@ -73,7 +77,7 @@ export const IntroStep: React.FC<IntroStepProps> = ({ selectedRole, onSelectRole
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="text-xl font-medium text-foreground">Umbandista</span>
+          <span className="text-xl font-bold text-foreground">Umbandista</span>
         </button>
       </div>
     </div>
