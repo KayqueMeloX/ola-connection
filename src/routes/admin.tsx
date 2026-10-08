@@ -12,6 +12,8 @@ import {
   Monitor,
   ArrowRight,
   AlertTriangle,
+  Flame,
+  Globe,
 } from "lucide-react";
 import {
   getStoredEvents,
@@ -60,7 +62,18 @@ function AdminDashboard() {
       return;
     }
 
-    const headers = ["ID", "Session ID", "Data/Hora", "Evento", "Etapa", "Numero", "Dispositivo", "UTM Source", "UTM Campaign"];
+    const headers = [
+      "ID",
+      "Session ID",
+      "Data/Hora",
+      "Evento",
+      "Etapa",
+      "Numero",
+      "Dispositivo",
+      "UTM Source",
+      "UTM Campaign",
+      "Detalhes",
+    ];
     const rows = events.map((e) => [
       e.id,
       e.sessionId,
@@ -71,6 +84,7 @@ function AdminDashboard() {
       e.isMobile ? "Mobile" : "Desktop",
       e.utmSource || "-",
       e.utmCampaign || "-",
+      e.data ? JSON.stringify(e.data).replace(/,/g, ";") : "-",
     ]);
 
     const csvContent =
@@ -86,12 +100,23 @@ function AdminDashboard() {
     document.body.removeChild(link);
   };
 
-  // Find the step with the highest drop-off rate among visited steps
-  const validSteps = metrics.stepMetrics.filter((s) => s.visitors > 0 && s.stepNumber < 18);
+  // Find the step with the highest drop-off rate among visited steps (excluding the final checkout)
+  const validSteps = metrics.stepMetrics.filter(
+    (s) => s.visitors > 0 && s.stepNumber < FUNNEL_STAGES.length
+  );
   const highestDropoffStep = validSteps.reduce(
     (max, step) => (step.dropoffs > (max?.dropoffs || 0) ? step : max),
     validSteps[0]
   );
+
+  // Compute UTM source aggregates
+  const rawEvents = getStoredEvents();
+  const utmMap: Record<string, number> = {};
+  rawEvents.forEach((ev) => {
+    if (ev.utmSource) {
+      utmMap[ev.utmSource] = (utmMap[ev.utmSource] || 0) + 1;
+    }
+  });
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 md:p-8 font-sans selection:bg-red-500/30">
@@ -109,10 +134,10 @@ function AdminDashboard() {
               </span>
             </div>
             <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
-              📊 Métricas do Funil — Quiz Saravá
+              📊 Painel Administrativo — Funil Umbanda
             </h1>
             <p className="text-sm text-slate-400">
-              Acompanhamento exato de desistências e conversão por etapa do funil
+              Métricas em tempo real das {FUNNEL_STAGES.length} etapas do funil simplificado (Quiz + Página de Vendas)
             </p>
           </div>
 
@@ -121,7 +146,7 @@ function AdminDashboard() {
             <select
               value={filterPeriod}
               onChange={(e) => setFilterPeriod(e.target.value as "all" | "today")}
-              className="bg-slate-900 border border-slate-700 text-xs font-semibold rounded-lg px-3 py-2 text-slate-200 outline-none"
+              className="bg-slate-900 border border-slate-700 text-xs font-semibold rounded-lg px-3 py-2 text-slate-200 outline-none cursor-pointer"
             >
               <option value="all">Todo o Período</option>
               <option value="today">Apenas Hoje</option>
@@ -129,7 +154,7 @@ function AdminDashboard() {
 
             <button
               onClick={refreshData}
-              className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-slate-700"
+              className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-slate-700 cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               Atualizar
@@ -137,24 +162,25 @@ function AdminDashboard() {
 
             <button
               onClick={handleExportCSV}
-              className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-slate-700"
+              className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-slate-700 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
-              CSV
+              Exportar CSV
             </button>
 
             <button
               onClick={handleClear}
-              className="inline-flex items-center gap-1.5 bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-red-800/50"
+              className="inline-flex items-center gap-1.5 bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-red-800/50 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              Limpar
+              Zerar Dados
             </button>
 
             <a
               href="/"
               target="_blank"
-              className="inline-flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition-colors shadow-lg shadow-red-600/20"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 bg-green-600 hover:bg-green-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition-colors shadow-lg shadow-green-600/20"
             >
               Ver Quiz
               <ArrowRight className="w-3.5 h-3.5" />
@@ -175,13 +201,13 @@ function AdminDashboard() {
 
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden">
             <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Completaram o Quiz</span>
+              <span className="text-xs font-bold uppercase tracking-wider">Chegaram à Oferta</span>
               <CheckCircle className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="text-3xl font-black text-emerald-400">
               {metrics.completionRate}%
             </div>
-            <p className="text-xs text-slate-400 mt-1">Responderam todas as 9 perguntas</p>
+            <p className="text-xs text-slate-400 mt-1">Concluíram as 3 perguntas</p>
           </div>
 
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden">
@@ -190,7 +216,7 @@ function AdminDashboard() {
               <ShoppingCart className="w-4 h-4 text-amber-400" />
             </div>
             <div className="text-3xl font-black text-amber-400">{metrics.totalCheckouts}</div>
-            <p className="text-xs text-slate-400 mt-1">Cliques no botão Hotmart</p>
+            <p className="text-xs text-slate-400 mt-1">Cliques no botão Hotmart (€ 19,90)</p>
           </div>
 
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden">
@@ -215,7 +241,7 @@ function AdminDashboard() {
               </h3>
               <p className="text-xs text-amber-200/80 mt-0.5">
                 A etapa <strong className="text-white">{highestDropoffStep.label}</strong> teve a
-                maior perda: <strong className="text-white">{highestDropoffStep.dropoffs} pessoas ({highestDropoffStep.dropoffRate}%)</strong> desistiram exatamente nesta tela.
+                maior perda: <strong className="text-white">{highestDropoffStep.dropoffs} pessoas ({highestDropoffStep.dropoffRate}%)</strong> saíram nesta tela.
               </p>
             </div>
           </div>
@@ -225,11 +251,12 @@ function AdminDashboard() {
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-black text-white">
-                🔍 Funil Etapa por Etapa (Onde as pessoas estão parando)
+              <h2 className="text-lg font-black text-white flex items-center gap-2">
+                <Flame className="w-5 h-5 text-amber-400" />
+                Funil Atualizado Etapa por Etapa ({FUNNEL_STAGES.length} Telas Ativas)
               </h2>
               <p className="text-xs text-slate-400">
-                Acompanhe o volume de pessoas em cada etapa e a perda entre cada transição
+                Acompanhe o volume de pessoas em cada tela e a taxa de retenção/desistência exata
               </p>
             </div>
           </div>
@@ -237,7 +264,7 @@ function AdminDashboard() {
           <div className="space-y-3">
             {metrics.stepMetrics.map((step) => {
               const isCritical = step.dropoffRate >= 30 && step.visitors > 0;
-              const isCheckout = step.stepNumber === 18;
+              const isCheckout = step.stepNumber === FUNNEL_STAGES.length;
 
               return (
                 <div
@@ -247,17 +274,17 @@ function AdminDashboard() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
-                        #{step.stepNumber}
+                        Etapa {step.stepNumber}
                       </span>
                       <span className="text-sm font-bold text-slate-100">{step.label}</span>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs">
+                    <div className="flex flex-wrap items-center gap-3 text-xs">
                       <span className="text-slate-300 font-bold">
-                        👥 {step.visitors} pessoas ({step.conversionRate}% do início)
+                        👥 {step.visitors} visitas ({step.conversionRate}% do topo)
                       </span>
 
-                      {step.stepNumber < 18 && step.visitors > 0 && (
+                      {step.stepNumber < FUNNEL_STAGES.length && step.visitors > 0 && (
                         <span
                           className={`font-extrabold px-2 py-0.5 rounded ${
                             isCritical
@@ -270,8 +297,8 @@ function AdminDashboard() {
                       )}
 
                       {isCheckout && (
-                        <span className="font-extrabold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                          🎯 Final Checkout
+                        <span className="font-extrabold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          🎯 Checkout Hotmart (€ 19,90)
                         </span>
                       )}
                     </div>
@@ -285,7 +312,7 @@ function AdminDashboard() {
                           ? "bg-emerald-500"
                           : isCritical
                           ? "bg-red-500"
-                          : "bg-gradient-to-r from-blue-500 to-indigo-500"
+                          : "bg-gradient-to-r from-green-500 to-emerald-400"
                       }`}
                       style={{ width: `${Math.max(step.conversionRate, step.visitors > 0 ? 3 : 0)}%` }}
                     />
@@ -297,7 +324,7 @@ function AdminDashboard() {
         </div>
 
         {/* Secondary Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Profiles */}
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg">
             <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
@@ -308,7 +335,7 @@ function AdminDashboard() {
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span>Iniciantes</span>
-                  <span>{metrics.inicianteCount}</span>
+                  <span>{metrics.inicianteCount} ({metrics.totalVisitors > 0 ? Math.round((metrics.inicianteCount / metrics.totalVisitors) * 100) : 0}%)</span>
                 </div>
                 <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
                   <div
@@ -327,7 +354,7 @@ function AdminDashboard() {
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span>Já Umbandistas</span>
-                  <span>{metrics.umbandistaCount}</span>
+                  <span>{metrics.umbandistaCount} ({metrics.totalVisitors > 0 ? Math.round((metrics.umbandistaCount / metrics.totalVisitors) * 100) : 0}%)</span>
                 </div>
                 <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
                   <div
@@ -352,21 +379,44 @@ function AdminDashboard() {
               Dispositivos dos Visitantes
             </h3>
             <div className="grid grid-cols-2 gap-4 text-center">
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                <Smartphone className="w-6 h-6 text-purple-400 mx-auto mb-1" />
+              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                <Smartphone className="w-5 h-5 text-purple-400 mx-auto mb-1" />
                 <div className="text-2xl font-black text-white">{metrics.mobilePercentage}%</div>
-                <span className="text-xs text-slate-400 font-semibold">Celular (Mobile)</span>
+                <span className="text-[11px] text-slate-400 font-semibold">Mobile (Celular)</span>
               </div>
 
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                <Monitor className="w-6 h-6 text-blue-400 mx-auto mb-1" />
+              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                <Monitor className="w-5 h-5 text-blue-400 mx-auto mb-1" />
                 <div className="text-2xl font-black text-white">{metrics.desktopPercentage}%</div>
-                <span className="text-xs text-slate-400 font-semibold">Computador (Desktop)</span>
+                <span className="text-[11px] text-slate-400 font-semibold">Desktop (PC)</span>
               </div>
             </div>
+          </div>
+
+          {/* UTM / Traffic Sources */}
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg">
+            <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+              <Globe className="w-4 h-4 text-emerald-400" />
+              Origem de Tráfego (UTMs)
+            </h3>
+            {Object.keys(utmMap).length === 0 ? (
+              <p className="text-xs text-slate-500 py-4 text-center">
+                Nenhum parâmetro UTM registrado ainda (Tráfego Direto).
+              </p>
+            ) : (
+              <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
+                {Object.entries(utmMap).map(([src, count]) => (
+                  <div key={src} className="flex justify-between items-center text-xs bg-slate-950 p-2 rounded-lg border border-slate-800">
+                    <span className="font-mono text-slate-300 truncate max-w-[140px]">{src}</span>
+                    <span className="font-bold text-emerald-400">{count} eventos</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
+

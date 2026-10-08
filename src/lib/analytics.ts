@@ -121,16 +121,16 @@ export const clearStoredEvents = () => {
   } catch {}
 };
 
-// Funnel steps list
+// Funnel steps list (Updated for current 8-step structure)
 export const FUNNEL_STAGES = [
-  { key: "intro", label: "1. Acessou o Quiz (Intro)", number: 1 },
-  { key: "role_selected", label: "2. Escolheu Perfil (Iniciante/Umbandista)", number: 2 },
+  { key: "intro", label: "1. Acessou o Quiz (Página Inicial)", number: 1 },
+  { key: "role_selected", label: "2. Escolheu Perfil (Iniciante / Umbandista)", number: 2 },
   { key: "q1", label: "3. Pergunta 1 (Fundamento / Caridade)", number: 3 },
-  { key: "q2", label: "4. Pergunta 2 (Entidades / Guias)", number: 4 },
-  { key: "q3", label: "5. Pergunta 3 (Desejo do Aplicativo)", number: 5 },
-  { key: "analyzing", label: "6. Tela Analisando / Diagnóstico", number: 6 },
-  { key: "offer_view", label: "7. Visualizou Oferta Unificada Completa", number: 7 },
-  { key: "checkout_click", label: "8. Clicou no Botão Hotmart (€ 19,90)", number: 8 },
+  { key: "q2", label: "4. Pergunta 2 (Entidades Espirituais)", number: 4 },
+  { key: "q3", label: "5. Pergunta 3 (Interesse no Aplicativo)", number: 5 },
+  { key: "analyzing", label: "6. Tela de Análise e Diagnóstico", number: 6 },
+  { key: "offer_view", label: "7. Página de Vendas (Oferta + 10 Bônus)", number: 7 },
+  { key: "checkout_click", label: "8. Clicou no Checkout Hotmart (€ 19,90)", number: 8 },
 ];
 
 export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
@@ -217,8 +217,9 @@ export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
     };
   });
 
-  const totalCheckouts = countsPerStage[countsPerStage.length - 1];
-  const finishedQuiz = countsPerStage[11]; // analyzing step
+  const totalCheckouts = countsPerStage[countsPerStage.length - 1] || 0;
+  // Completed quiz = reached analyzing or offer step (index 5 or 6)
+  const finishedQuiz = countsPerStage[5] || countsPerStage[6] || 0;
 
   return {
     totalVisitors: totalSessions,
