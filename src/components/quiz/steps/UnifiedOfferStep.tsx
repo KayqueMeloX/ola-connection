@@ -225,8 +225,16 @@ export const UnifiedOfferStep: React.FC = () => {
             <span className="text-4xl sm:text-5xl font-black text-green-600 tracking-tight">19,90</span>
           </div>
 
-          <span className="text-[11px] font-bold text-muted-foreground mt-0.5">
-            Economia de <strong className="text-green-600 font-black">€ 77,10</strong> • Pagamento Único
+          {/* Destaque Máximo da Economia de 77€ */}
+          <div className="mt-2.5 w-full max-w-xs mx-auto py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-500/20 via-emerald-500/30 to-emerald-500/20 border-2 border-emerald-500/60 shadow-sm flex items-center justify-center gap-2">
+            <span className="text-base">💰</span>
+            <span className="text-xs sm:text-sm font-black uppercase tracking-wide text-emerald-800 dark:text-emerald-300">
+              ECONOMIA DE <strong className="text-emerald-600 dark:text-emerald-400 font-black underline decoration-2 decoration-emerald-500 text-sm sm:text-base">€ 77,10</strong>
+            </span>
+          </div>
+
+          <span className="text-[10px] sm:text-[11px] font-bold text-muted-foreground mt-1">
+            Pagamento Único • Sem Mensalidades • Acesso Vitalício
           </span>
         </div>
 
@@ -348,6 +356,22 @@ export const UnifiedOfferStep: React.FC = () => {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Caixa de Super Destaque da Economia antes do Botão */}
+        <div className="w-full bg-gradient-to-br from-emerald-500/10 to-green-500/5 border-2 border-emerald-500/40 rounded-2xl p-3.5 sm:p-4 mb-3 text-center shadow-md">
+          <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground font-bold mb-1">
+            <span>Preço normal do pacote completo:</span>
+            <span className="line-through text-red-500 font-extrabold text-sm sm:text-base">€ 97,00</span>
+          </div>
+          <div className="flex items-center justify-between text-sm sm:text-base font-black text-foreground mb-2">
+            <span>Seu valor promocional hoje:</span>
+            <span className="text-2xl sm:text-3xl font-black text-emerald-600">19,90€</span>
+          </div>
+          <div className="py-2 px-3 rounded-xl bg-emerald-600 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md">
+            <span>🎉</span>
+            <span>VOCÊ ECONOMIZA € 77,10 (80% DE DESCONTO)</span>
+          </div>
         </div>
 
         {/* Botão de Compra Principal Grande */}
