@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowRight, Timer } from "lucide-react";
 import { QuizHeader } from "./QuizHeader";
 import { SpiritualBalance } from "./SpiritualBalance";
+import { getCheckoutUrlWithUtms } from "@/lib/utils";
 
 interface QuizLayoutProps {
   children: React.ReactNode;
@@ -53,7 +54,7 @@ export const QuizLayout: React.FC<QuizLayoutProps> = ({
         <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-transparent pt-2.5 px-4">
           <div className="w-full max-w-lg mx-auto pointer-events-auto">
             <a
-              href={CHECKOUT_URL}
+              href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
               onClick={onCheckoutClick}
               className="w-full py-3 sm:py-3.5 px-4 sm:px-6 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-between gap-2.5 cursor-pointer"
             >

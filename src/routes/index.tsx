@@ -44,21 +44,21 @@ function QuizApp() {
     scrollToTop();
 
     if (currentStep === "quiz") {
-      trackEvent("question_view", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
+      trackEvent("question_view", `q${currentQuestionIndex + 1}`, 2 + currentQuestionIndex, {
         questionId: quizQuestions[currentQuestionIndex]?.id,
         questionText: quizQuestions[currentQuestionIndex]?.question,
       });
     } else if (currentStep === "analyzing") {
-      trackEvent("analyzing_view", "analyzing", 6);
+      trackEvent("analyzing_view", "analyzing", 5);
     } else if (currentStep === "offer") {
-      trackEvent("offer_view", "offer_view", 7, { score });
+      trackEvent("offer_view", "offer_view", 6, { score });
     }
   }, [currentStep, currentQuestionIndex, score]);
 
   const handleSelectRole = (role: "iniciante" | "umbandista") => {
     if (selectedRole !== null) return;
     setSelectedRole(role);
-    trackEvent("role_selected", "role_selected", 2, { role });
+    trackEvent("role_selected", "intro", 1, { role });
     setPreviousBalance(spiritualBalance);
     setSpiritualBalance((prev) => prev + 30);
     setTimeout(() => {
@@ -76,8 +76,9 @@ function QuizApp() {
       setScore((prev) => prev + 1);
     }
 
-    trackEvent("question_answered", `q${currentQuestionIndex + 1}`, 3 + currentQuestionIndex, {
+    trackEvent("question_answered", `q${currentQuestionIndex + 1}`, 2 + currentQuestionIndex, {
       questionId: quizQuestions[currentQuestionIndex]?.id,
+      questionText: quizQuestions[currentQuestionIndex]?.question,
       answerIndex: index,
       answerText: quizQuestions[currentQuestionIndex]?.options[index]?.text,
       isCorrect,
@@ -98,7 +99,7 @@ function QuizApp() {
   };
 
   const handleHeaderCheckoutClick = () => {
-    trackEvent("checkout_click", "checkout_click", 8, {
+    trackEvent("checkout_click", "checkout_click", 7, {
       source: "sticky_header",
       price: 19.9,
       currency: "EUR",

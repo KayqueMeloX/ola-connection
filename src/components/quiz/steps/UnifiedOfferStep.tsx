@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck, Timer, HelpCircle, ChevronDown } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
+import { getCheckoutUrlWithUtms } from "@/lib/utils";
 
 const CHECKOUT_URL = "https://pay.hotmart.com/G106783622L?checkoutMode=10";
 
@@ -149,7 +150,8 @@ export const UnifiedOfferStep: React.FC = () => {
 
   const handleCheckoutClick = () => {
     pauseForVideo();
-    trackEvent("checkout_click", "checkout_click", 8, {
+    trackEvent("checkout_click", "checkout_click", 7, {
+      source: "body_cta",
       price: 19.9,
       currency: "EUR",
     });
@@ -162,7 +164,8 @@ export const UnifiedOfferStep: React.FC = () => {
           content_name: "Mapa Mental da Umbanda + 10 Bonus",
         });
       }
-      window.location.href = CHECKOUT_URL;
+      const finalCheckoutUrl = getCheckoutUrlWithUtms(CHECKOUT_URL);
+      window.location.href = finalCheckoutUrl;
     }
   };
 
@@ -210,7 +213,8 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
 
         {/* Botão Comprar Agora */}
-        <button
+        <a
+          href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
           onClick={handleCheckoutClick}
           className="w-full max-w-[260px] sm:max-w-[280px] mx-auto py-4 sm:py-5 px-4 bg-[#16a34a] hover:bg-[#15803d] text-white font-black text-lg sm:text-xl rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer mt-4"
           style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
@@ -219,7 +223,7 @@ export const UnifiedOfferStep: React.FC = () => {
             <Check className="w-4 h-4 text-white stroke-[3]" />
           </div>
           <span>Comprar Agora</span>
-        </button>
+        </a>
       </div>
 
       {/* 2. Primeiro Vídeo (Apresentação do App) */}
@@ -326,7 +330,8 @@ export const UnifiedOfferStep: React.FC = () => {
         </div>
 
         {/* Botão de Compra Principal Grande (Igual no Print) */}
-        <button
+        <a
+          href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
           onClick={handleCheckoutClick}
           className="w-full py-4 sm:py-5 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-black text-lg sm:text-xl rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-center gap-3 cursor-pointer mb-3"
         >
@@ -334,7 +339,7 @@ export const UnifiedOfferStep: React.FC = () => {
             <Check className="w-4 h-4 text-white stroke-[3]" />
           </div>
           <span>Quero comprar o Material Completo e receber agora!</span>
-        </button>
+        </a>
 
         {/* Selo Hotmart & Ambiente 100% Seguro */}
         <div className="flex flex-col items-center justify-center gap-2 mb-6">
