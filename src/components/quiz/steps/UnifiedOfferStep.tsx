@@ -182,16 +182,30 @@ export const UnifiedOfferStep: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2">
+    <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2 pb-20 sm:pb-8">
       {/* 1. Headline + Preço Inicial */}
       <div className="w-full mb-6 pt-1 max-w-md mx-auto">
-        <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground leading-snug mb-4">
+        {/* Banner de Cupom de 80% Liberado */}
+        <div
+          className="w-full mb-3 px-3 py-1.5 rounded-xl text-center shadow-sm flex items-center justify-center gap-1.5"
+          style={{
+            backgroundColor: "rgba(34, 197, 94, 0.12)",
+            border: "1px solid rgba(34, 197, 94, 0.35)",
+          }}
+        >
+          <span className="text-base">🎉</span>
+          <span className="text-[11px] sm:text-xs font-black uppercase tracking-wide text-green-700 dark:text-green-400">
+            CUPOM DE 80% APLICADO COM SUCESSO
+          </span>
+        </div>
+
+        <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground leading-snug mb-3">
           <span style={{ color: "#ef4444" }} className="font-extrabold uppercase">SOMENTE HOJE:</span> Você vai evoluir investindo no{" "}
           <span style={{ color: "#ef4444" }} className="font-extrabold">Aplicativo do Mapa Mental da Umbanda</span> com o{" "}
           <span className="underline font-bold decoration-foreground decoration-2">material completo</span> pelo valor promocional:
         </h1>
 
-        {/* Caixa de Preço Inicial (Igual no Print) */}
+        {/* Caixa de Preço Inicial com Economia */}
         <div className="flex flex-col items-center justify-center my-3">
           <div className="text-sm sm:text-base font-black text-foreground flex items-center gap-1.5">
             <span>DE:</span>
@@ -210,20 +224,39 @@ export const UnifiedOfferStep: React.FC = () => {
             <span className="text-lg sm:text-xl font-black text-green-600">€</span>
             <span className="text-4xl sm:text-5xl font-black text-green-600 tracking-tight">19,90</span>
           </div>
+
+          <span className="text-[11px] font-bold text-muted-foreground mt-0.5">
+            Economia de <strong className="text-green-600 font-black">€ 77,10</strong> • Pagamento Único
+          </span>
         </div>
 
-        {/* Botão Comprar Agora */}
+        {/* Botão de Compra 1 (Micro-Compromisso de Alta Conversão) */}
         <a
           href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
           onClick={handleCheckoutClick}
-          className="w-full max-w-[260px] sm:max-w-[280px] mx-auto py-4 sm:py-5 px-4 bg-[#16a34a] hover:bg-[#15803d] text-white font-black text-lg sm:text-xl rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2.5 cursor-pointer mt-4"
+          className="w-full max-w-[290px] sm:max-w-[310px] mx-auto py-3.5 sm:py-4 px-4 bg-[#16a34a] hover:bg-[#15803d] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2 cursor-pointer mt-3"
           style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
         >
-          <div className="w-6 h-6 rounded-full bg-white/25 flex items-center justify-center shrink-0">
-            <Check className="w-4 h-4 text-white stroke-[3]" />
-          </div>
-          <span>Comprar Agora</span>
+          <Zap className="w-5 h-5 text-yellow-300 fill-yellow-300 shrink-0" />
+          <span>QUERO MEU ACESSO POR 19,90€</span>
         </a>
+
+        {/* Micro-garantias abaixo do botão 1 */}
+        <div className="flex items-center justify-center gap-2 text-[10px] sm:text-[11px] font-semibold text-muted-foreground mt-2 mb-1.5">
+          <span>⚡ Acesso Imediato</span>
+          <span>•</span>
+          <span>🛡️ 60 Dias de Garantia</span>
+          <span>•</span>
+          <span>🔒 Hotmart Seguro</span>
+        </div>
+
+        {/* Métodos de Pagamento Populares na Europa */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-bold text-muted-foreground mt-0.5 mb-2">
+          <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">💳 Cartão</span>
+          <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">📱 MB WAY</span>
+          <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">🅿️ PayPal</span>
+          <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">🏧 Multibanco</span>
+        </div>
       </div>
 
       {/* 2. Primeiro Vídeo (Apresentação do App) */}
@@ -329,17 +362,25 @@ export const UnifiedOfferStep: React.FC = () => {
           ))}
         </div>
 
-        {/* Botão de Compra Principal Grande (Igual no Print) */}
+        {/* Botão de Compra Principal Grande */}
         <a
           href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
           onClick={handleCheckoutClick}
-          className="w-full py-4 sm:py-5 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-black text-lg sm:text-xl rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-center gap-3 cursor-pointer mb-3"
+          className="w-full py-4 sm:py-5 px-6 bg-[#4CAF82] hover:bg-[#3d9970] text-white font-black text-lg sm:text-xl rounded-2xl shadow-2xl transition-all animate-pulse-scale flex items-center justify-center gap-3 cursor-pointer mb-2"
         >
           <div className="w-6 h-6 rounded-full bg-white/25 flex items-center justify-center shrink-0">
             <Check className="w-4 h-4 text-white stroke-[3]" />
           </div>
-          <span>Quero comprar o Material Completo e receber agora!</span>
+          <span>Quero o Material Completo por 19,90€!</span>
         </a>
+
+        <div className="flex items-center justify-center gap-2 text-[10px] sm:text-[11px] font-semibold text-muted-foreground mb-3">
+          <span>⚡ Acesso Vitalício</span>
+          <span>•</span>
+          <span>🎁 10 Bônus Grátis</span>
+          <span>•</span>
+          <span>🛡️ 60 Dias de Garantia</span>
+        </div>
 
         {/* Selo Hotmart & Ambiente 100% Seguro */}
         <div className="flex flex-col items-center justify-center gap-2 mb-6">
@@ -478,6 +519,26 @@ export const UnifiedOfferStep: React.FC = () => {
             );
           })}
         </div>
+      </div>
+
+      {/* 6. Barra Flutuante de Compra no Rodapé (Mobile Thumb-Zone) */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 p-2.5 pb-safe bg-background/95 backdrop-blur-md border-t border-border/80 shadow-2xl flex justify-center sm:hidden">
+        <a
+          href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
+          onClick={handleCheckoutClick}
+          className="w-full max-w-md py-3 px-4 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-sm rounded-xl shadow-lg transition-all animate-pulse-scale flex items-center justify-between gap-2 cursor-pointer"
+        >
+          <div className="flex items-center gap-1.5 min-w-0">
+            <Zap className="w-4 h-4 text-yellow-300 fill-yellow-300 shrink-0" />
+            <span className="truncate uppercase font-black tracking-wide text-xs">LIBERAR MEU ACESSO</span>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="bg-black/30 px-2 py-0.5 rounded-full text-xs font-mono font-bold text-yellow-200">
+              19,90€
+            </span>
+            <ArrowRight className="w-4 h-4 shrink-0" />
+          </div>
+        </a>
       </div>
     </div>
   );
