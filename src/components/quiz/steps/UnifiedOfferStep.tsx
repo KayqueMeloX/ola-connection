@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Check, ShieldCheck, Zap, Star, ArrowRight, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck, Timer, HelpCircle, ChevronDown } from "lucide-react";
+import { Check, ShieldCheck, Star, Gift, Sparkles, MessageCircle, ChevronLeft, ChevronRight, UserCheck, Timer, HelpCircle, ChevronDown } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useBackgroundMusic } from "../BackgroundMusicProvider";
 import { getCheckoutUrlWithUtms } from "@/lib/utils";
@@ -182,7 +182,7 @@ export const UnifiedOfferStep: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2 pb-20 sm:pb-8">
+    <div className="flex-1 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500 w-full px-2 pb-12 sm:pb-10">
       {/* 1. Headline + Preço Inicial */}
       <div className="w-full mb-6 pt-1 max-w-md mx-auto">
         {/* Banner de Cupom de 80% Liberado */}
@@ -230,18 +230,7 @@ export const UnifiedOfferStep: React.FC = () => {
           </span>
         </div>
 
-        {/* Botão de Compra 1 (Micro-Compromisso de Alta Conversão) */}
-        <a
-          href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
-          onClick={handleCheckoutClick}
-          className="w-full max-w-[290px] sm:max-w-[310px] mx-auto py-3.5 sm:py-4 px-4 bg-[#16a34a] hover:bg-[#15803d] text-white font-black text-base sm:text-lg rounded-2xl shadow-xl transition-all animate-pulse-scale flex items-center justify-center gap-2 cursor-pointer mt-3"
-          style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
-        >
-          <Zap className="w-5 h-5 text-yellow-300 fill-yellow-300 shrink-0" />
-          <span>QUERO MEU ACESSO POR 19,90€</span>
-        </a>
-
-        {/* Micro-garantias abaixo do botão 1 */}
+        {/* Micro-garantias e Métodos de Pagamento Populares na Europa */}
         <div className="flex items-center justify-center gap-2 text-[10px] sm:text-[11px] font-semibold text-muted-foreground mt-2 mb-1.5">
           <span>⚡ Acesso Imediato</span>
           <span>•</span>
@@ -250,7 +239,6 @@ export const UnifiedOfferStep: React.FC = () => {
           <span>🔒 Hotmart Seguro</span>
         </div>
 
-        {/* Métodos de Pagamento Populares na Europa */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-bold text-muted-foreground mt-0.5 mb-2">
           <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">💳 Cartão</span>
           <span className="px-2 py-0.5 rounded bg-muted/70 border border-border/60">📱 MB WAY</span>
@@ -519,26 +507,6 @@ export const UnifiedOfferStep: React.FC = () => {
             );
           })}
         </div>
-      </div>
-
-      {/* 6. Barra Flutuante de Compra no Rodapé (Mobile Thumb-Zone) */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 p-2.5 pb-safe bg-background/95 backdrop-blur-md border-t border-border/80 shadow-2xl flex justify-center sm:hidden">
-        <a
-          href={getCheckoutUrlWithUtms(CHECKOUT_URL)}
-          onClick={handleCheckoutClick}
-          className="w-full max-w-md py-3 px-4 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-black text-sm rounded-xl shadow-lg transition-all animate-pulse-scale flex items-center justify-between gap-2 cursor-pointer"
-        >
-          <div className="flex items-center gap-1.5 min-w-0">
-            <Zap className="w-4 h-4 text-yellow-300 fill-yellow-300 shrink-0" />
-            <span className="truncate uppercase font-black tracking-wide text-xs">LIBERAR MEU ACESSO</span>
-          </div>
-          <div className="flex items-center gap-1.5 shrink-0">
-            <span className="bg-black/30 px-2 py-0.5 rounded-full text-xs font-mono font-bold text-yellow-200">
-              19,90€
-            </span>
-            <ArrowRight className="w-4 h-4 shrink-0" />
-          </div>
-        </a>
       </div>
     </div>
   );
