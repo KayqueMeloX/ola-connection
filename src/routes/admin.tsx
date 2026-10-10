@@ -20,6 +20,7 @@ import {
   clearStoredEvents,
   calculateFunnelMetrics,
   FUNNEL_STAGES,
+  type AnalyticsEvent,
 } from "@/lib/analytics";
 
 export const Route = createFileRoute("/admin")({
@@ -36,7 +37,7 @@ function AdminDashboard() {
     if (filterPeriod === "today") {
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
-      events = events.filter((e) => e.timestamp >= todayStart.getTime());
+      events = events.filter((e: AnalyticsEvent) => e.timestamp >= todayStart.getTime());
     }
     setMetrics(calculateFunnelMetrics(events));
     setLastUpdate(new Date());
@@ -74,7 +75,7 @@ function AdminDashboard() {
       "UTM Campaign",
       "Detalhes",
     ];
-    const rows = events.map((e) => [
+    const rows = events.map((e: AnalyticsEvent) => [
       e.id,
       e.sessionId,
       new Date(e.timestamp).toLocaleString("pt-BR"),
@@ -89,7 +90,7 @@ function AdminDashboard() {
 
     const csvContent =
       "data:text/csv;charset=utf-8," +
-      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+      [headers.join(","), ...rows.map((r: unknown[]) => r.join(","))].join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -112,7 +113,7 @@ function AdminDashboard() {
   // Compute UTM source aggregates
   const rawEvents = getStoredEvents();
   const utmMap: Record<string, number> = {};
-  rawEvents.forEach((ev) => {
+  rawEvents.forEach((ev: AnalyticsEvent) => {
     if (ev.utmSource) {
       utmMap[ev.utmSource] = (utmMap[ev.utmSource] || 0) + 1;
     }

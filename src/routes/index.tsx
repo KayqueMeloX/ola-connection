@@ -71,7 +71,7 @@ function QuizApp() {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
 
-    const isCorrect = index === quizQuestions[currentQuestionIndex].correctAnswer;
+    const isCorrect = index === quizQuestions[currentQuestionIndex]?.correctAnswer;
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
@@ -144,9 +144,9 @@ function QuizApp() {
           <IntroStep selectedRole={selectedRole} onSelectRole={handleSelectRole} />
         )}
 
-        {currentStep === "quiz" && (
+        {currentStep === "quiz" && quizQuestions[currentQuestionIndex] && (
           <QuestionStep
-            question={quizQuestions[currentQuestionIndex]}
+            question={quizQuestions[currentQuestionIndex]!}
             nextQuestionImage={quizQuestions[currentQuestionIndex + 1]?.questionImage}
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={quizQuestions.length}
