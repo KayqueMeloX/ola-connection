@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface QuestionStepProps {
   question: QuizQuestion;
-  nextQuestionImage?: string;
+  nextQuestionImage?: string | undefined;
   questionNumber: number;
   totalQuestions: number;
   selectedAnswer: number | null;

@@ -72,6 +72,7 @@ export const SpiritualBalance: React.FC<SpiritualBalanceProps> = ({
     } else {
       setDisplayValue(balance);
     }
+    return undefined;
   }, [balance, previousBalance, onBalanceUpdate]);
 
   return (
