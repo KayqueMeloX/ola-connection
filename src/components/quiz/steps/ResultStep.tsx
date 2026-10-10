@@ -66,7 +66,7 @@ const launchFireworks = () => {
       y: canvas.height,
       targetY: canvas.height * 0.15 + Math.random() * canvas.height * 0.3,
       vy: -12 - Math.random() * 4,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      color: colors[Math.floor(Math.random() * colors.length)] ?? "#ffffff",
       exploded: false,
     });
   };
@@ -118,6 +118,7 @@ const launchFireworks = () => {
 
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
+      if (!p) continue;
       p.trail.push({ x: p.x, y: p.y });
       if (p.trail.length > 5) p.trail.shift();
       p.vy += 0.05;
