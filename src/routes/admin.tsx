@@ -247,72 +247,189 @@ function AdminDashboard() {
           </div>
         )}
 
-        {/* Funnel Visualization */}
+        {/* Main Drop-Off & Conversion Table */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
             <div>
-              <h2 className="text-lg font-black text-white flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-black text-white flex items-center gap-2">
                 <Flame className="w-5 h-5 text-amber-400" />
-                Funil Atualizado Etapa por Etapa ({FUNNEL_STAGES.length} Telas Ativas)
+                📋 Tabela de Abandono e Desistência do Funil
               </h2>
-              <p className="text-xs text-slate-400">
-                Acompanhe o volume de pessoas em cada tela e a taxa de retenção/desistência exata
+              <p className="text-xs text-slate-400 mt-0.5">
+                Saiba exatamente onde as pessoas estão abandonando o quiz antes de comprar
               </p>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/15 text-red-400 border border-red-500/30 font-bold">
+                <span className="w-2 h-2 rounded-full bg-red-400" /> &gt;35% Perda Crítica
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-400 border border-amber-500/30 font-bold">
+                <span className="w-2 h-2 rounded-full bg-amber-400" /> 15-35% Atenção
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" /> &lt;15% Ótimo
+              </span>
             </div>
           </div>
 
+          {/* Table Container */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-800 text-[11px] font-black uppercase text-slate-400 tracking-wider">
+                  <th className="py-3 px-3">Etapa</th>
+                  <th className="py-3 px-3">Tela / Pergunta</th>
+                  <th className="py-3 px-3 text-center">Visitantes</th>
+                  <th className="py-3 px-3 text-center">Avançaram</th>
+                  <th className="py-3 px-3 text-center">Saíram Aqui (Perda)</th>
+                  <th className="py-3 px-3 text-center">Taxa de Abandono</th>
+                  <th className="py-3 px-3 text-center">Retenção Total</th>
+                  <th className="py-3 px-3 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60 text-xs">
+                {metrics.stepMetrics.map((step) => {
+                  const isCheckout = step.stepNumber === FUNNEL_STAGES.length;
+
+                  return (
+                    <tr
+                      key={step.stepKey}
+                      className="hover:bg-slate-800/40 transition-colors"
+                    >
+                      <td className="py-3.5 px-3 font-mono font-bold text-slate-400">
+                        <span className="bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                          #{step.stepNumber}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-3 font-bold text-slate-100">
+                        {step.label}
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center font-bold text-slate-200">
+                        {step.visitors}
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center font-bold text-emerald-400">
+                        {isCheckout ? "-" : `${step.advances} (${step.advanceRate}%)`}
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center font-extrabold">
+                        {isCheckout ? (
+                          <span className="text-slate-500">-</span>
+                        ) : step.dropoffs > 0 ? (
+                          <span
+                            className={`px-2 py-0.5 rounded ${
+                              step.status === "danger"
+                                ? "bg-red-500/20 text-red-400 border border-red-500/40"
+                                : step.status === "warning"
+                                ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
+                                : "bg-slate-800 text-slate-300"
+                            }`}
+                          >
+                            🔻 {step.dropoffs} pessoas
+                          </span>
+                        ) : (
+                          <span className="text-slate-500">0</span>
+                        )}
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center font-black">
+                        {isCheckout ? (
+                          <span className="text-emerald-400">0%</span>
+                        ) : (
+                          <span
+                            className={
+                              step.status === "danger"
+                                ? "text-red-400"
+                                : step.status === "warning"
+                                ? "text-amber-400"
+                                : "text-slate-400"
+                            }
+                          >
+                            {step.dropoffRate}%
+                          </span>
+                        )}
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center">
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="font-bold text-slate-200 min-w-[32px]">
+                            {step.conversionRate}%
+                          </span>
+                          <div className="w-16 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+                            <div
+                              className={`h-full rounded-full ${
+                                isCheckout
+                                  ? "bg-emerald-400"
+                                  : "bg-gradient-to-r from-green-500 to-emerald-400"
+                              }`}
+                              style={{ width: `${step.conversionRate}%` }}
+                            />
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="py-3.5 px-3 text-center font-bold">
+                        {isCheckout ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+                            🎯 Checkout Hotmart
+                          </span>
+                        ) : step.status === "danger" ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-black bg-red-500/20 text-red-400 border border-red-500/40">
+                            🔴 Alta Perda
+                          </span>
+                        ) : step.status === "warning" ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/40">
+                            🟡 Atenção
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                            🟢 Bom
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Funnel Visualization Bars */}
+        <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <h2 className="text-base font-black text-white flex items-center gap-2">
+            <span>📊</span> Fluxo Visual do Funil
+          </h2>
           <div className="space-y-3">
             {metrics.stepMetrics.map((step) => {
-              const isCritical = step.dropoffRate >= 30 && step.visitors > 0;
               const isCheckout = step.stepNumber === FUNNEL_STAGES.length;
 
               return (
                 <div
                   key={step.stepKey}
-                  className="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3.5 transition-all hover:border-slate-700"
+                  className="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
-                        Etapa {step.stepNumber}
-                      </span>
-                      <span className="text-sm font-bold text-slate-100">{step.label}</span>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3 text-xs">
-                      <span className="text-slate-300 font-bold">
-                        👥 {step.visitors} visitas ({step.conversionRate}% do topo)
-                      </span>
-
-                      {step.stepNumber < FUNNEL_STAGES.length && step.visitors > 0 && (
-                        <span
-                          className={`font-extrabold px-2 py-0.5 rounded ${
-                            isCritical
-                              ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                              : "bg-slate-800 text-slate-300"
-                          }`}
-                        >
-                          🔻 Desistiram: {step.dropoffs} ({step.dropoffRate}%)
-                        </span>
-                      )}
-
-                      {isCheckout && (
-                        <span className="font-extrabold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                          🎯 Checkout Hotmart (€ 19,90)
-                        </span>
-                      )}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5 text-xs">
+                    <span className="font-bold text-slate-200">
+                      {step.label}
+                    </span>
+                    <div className="flex items-center gap-3 text-slate-400 font-semibold">
+                      <span>👥 {step.visitors} visitantes</span>
+                      <span>({step.conversionRate}% do topo)</span>
                     </div>
                   </div>
-
-                  {/* Visual Bar */}
-                  <div className="w-full bg-slate-800 h-3 rounded-full overflow-hidden relative">
+                  <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 rounded-full ${
                         isCheckout
-                          ? "bg-emerald-500"
-                          : isCritical
+                          ? "bg-emerald-400"
+                          : step.status === "danger"
                           ? "bg-red-500"
-                          : "bg-gradient-to-r from-green-500 to-emerald-400"
+                          : step.status === "warning"
+                          ? "bg-amber-500"
+                          : "bg-emerald-500"
                       }`}
                       style={{ width: `${Math.max(step.conversionRate, step.visitors > 0 ? 3 : 0)}%` }}
                     />

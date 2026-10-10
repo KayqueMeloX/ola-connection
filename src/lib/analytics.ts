@@ -20,118 +20,49 @@ export interface FunnelStepMetric {
   label: string;
   stepNumber: number;
   visitors: number;
+  advances: number;
   dropoffs: number;
   dropoffRate: number;
+  advanceRate: number;
   conversionRate: number; // relative to initial visitors
+  status: "great" | "warning" | "danger" | "checkout";
 }
-
-const STORAGE_KEY = "umbanda_quiz_analytics_events_v1";
-const SESSION_KEY = "umbanda_quiz_current_session_v1";
-
-const getSessionId = (): string => {
-  try {
-    let sid = sessionStorage.getItem(SESSION_KEY);
-    if (!sid) {
-      sid = "sess_" + Math.random().toString(36).substring(2, 9) + "_" + Date.now();
-      sessionStorage.setItem(SESSION_KEY, sid);
-    }
-    return sid;
-  } catch {
-    return "sess_" + Math.random().toString(36).substring(2, 9);
-  }
-};
-
-const getUtms = () => {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      utmSource: params.get("utm_source") || undefined,
-      utmCampaign: params.get("utm_campaign") || undefined,
-      utmMedium: params.get("utm_medium") || undefined,
-    };
-  } catch {
-    return {};
-  }
-};
-
-export const trackEvent = (
-  eventName: string,
-  stepName: string,
-  stepNumber: number,
-  data?: Record<string, any>
-) => {
-  try {
-    const sessionId = getSessionId();
-    const isMobile =
-      typeof window !== "undefined" &&
-      (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-        window.innerWidth <= 768);
-
-    const utms = getUtms();
-
-    const event: AnalyticsEvent = {
-      id: "ev_" + Math.random().toString(36).substring(2, 9) + "_" + Date.now(),
-      sessionId,
-      timestamp: Date.now(),
-      eventName,
-      stepName,
-      stepNumber,
-      data,
-      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-      isMobile,
-      ...utms,
-    };
-
-    const existingJson = localStorage.getItem(STORAGE_KEY);
-    const events: AnalyticsEvent[] = existingJson ? JSON.parse(existingJson) : [];
-    events.push(event);
-
-    // Keep last 10,000 events
-    if (events.length > 10000) {
-      events.splice(0, events.length - 10000);
-    }
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-
-    // Dispatch to Meta Pixel fbq if present
-    if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-      (window as any).fbq("trackCustom", eventName, {
-        stepName,
-        stepNumber,
-        ...data,
-      });
-    }
-  } catch (err) {
-    console.error("Tracking error:", err);
-  }
-};
-
-export const getStoredEvents = (): AnalyticsEvent[] => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-};
-
-export const clearStoredEvents = () => {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch {}
-};
 
 // Funnel steps list (Updated for current 8-step structure)
 export const FUNNEL_STAGES = [
-  { key: "intro", label: "1. Acessou o Quiz (Página Inicial)", number: 1 },
-  { key: "role_selected", label: "2. Escolheu Perfil (Iniciante / Umbandista)", number: 2 },
+  { key: "intro", label: "1. Página Inicial (Intro)", number: 1 },
+  { key: "role_selected", label: "2. Escolha de Perfil (Iniciante / Umbandista)", number: 2 },
   { key: "q1", label: "3. Pergunta 1 (Fundamento / Caridade)", number: 3 },
   { key: "q2", label: "4. Pergunta 2 (Entidades Espirituais)", number: 4 },
   { key: "q3", label: "5. Pergunta 3 (Interesse no Aplicativo)", number: 5 },
-  { key: "analyzing", label: "6. Tela de Análise e Diagnóstico", number: 6 },
+  { key: "analyzing", label: "6. Diagnóstico / Analisando Respostas", number: 6 },
   { key: "offer_view", label: "7. Página de Vendas (Oferta + 10 Bônus)", number: 7 },
-  { key: "checkout_click", label: "8. Clicou no Checkout Hotmart (€ 19,90)", number: 8 },
+  { key: "checkout_click", label: "8. Checkout Hotmart (€ 19,90)", number: 8 },
 ];
+
+const normalizeEventStepNumber = (ev: AnalyticsEvent): number => {
+  if (ev.stepNumber >= 1 && ev.stepNumber <= 8) {
+    return ev.stepNumber;
+  }
+  const name = (ev.stepName || "").toLowerCase();
+  if (name === "intro" || name === "page_view") return 1;
+  if (name === "role_selected" || name === "role") return 2;
+  if (name === "q1" || name === "question_1") return 3;
+  if (name === "q2" || name === "question_2") return 4;
+  if (name === "q3" || name === "question_3") return 5;
+  if (name === "analyzing" || name === "analyzing_view" || name === "result") return 6;
+  if (
+    name === "offer_view" ||
+    name === "offer" ||
+    name === "checkout_offer" ||
+    name === "offer_intro" ||
+    name === "bonus" ||
+    name === "how_to_receive"
+  )
+    return 7;
+  if (name === "checkout_click" || name === "checkout" || name === "initiate_checkout") return 8;
+  return 1;
+};
 
 export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
   if (!events || events.length === 0) {
@@ -149,23 +80,28 @@ export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
         label: s.label,
         stepNumber: s.number,
         visitors: 0,
+        advances: 0,
         dropoffs: 0,
         dropoffRate: 0,
+        advanceRate: 0,
         conversionRate: 0,
+        status: s.number === 8 ? ("checkout" as const) : ("great" as const),
       })),
     };
   }
 
-  // Group events by session
-  const sessions = new Map<string, Set<string>>();
+  // Map each session to its maximum reached stage
+  const sessionMaxStep = new Map<string, number>();
   const sessionRoles = new Map<string, string>();
   const sessionDevices = new Map<string, boolean>();
 
   events.forEach((ev) => {
-    if (!sessions.has(ev.sessionId)) {
-      sessions.set(ev.sessionId, new Set());
+    const stepNum = normalizeEventStepNumber(ev);
+    const currentMax = sessionMaxStep.get(ev.sessionId) || 0;
+    if (stepNum > currentMax) {
+      sessionMaxStep.set(ev.sessionId, stepNum);
     }
-    sessions.get(ev.sessionId)!.add(ev.stepName);
+
     sessionDevices.set(ev.sessionId, ev.isMobile);
 
     if (ev.data?.role) {
@@ -173,7 +109,7 @@ export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
     }
   });
 
-  const totalSessions = sessions.size;
+  const totalSessions = sessionMaxStep.size;
   let totalMobile = 0;
   sessionDevices.forEach((isMob) => {
     if (isMob) totalMobile++;
@@ -186,40 +122,55 @@ export const calculateFunnelMetrics = (events: AnalyticsEvent[]) => {
     if (r === "umbandista") umbandistas++;
   });
 
-  // Calculate visitors per stage
-  const countsPerStage = FUNNEL_STAGES.map((stage) => {
-    let count = 0;
-    sessions.forEach((reachedSteps) => {
-      if (reachedSteps.has(stage.key)) {
-        count++;
+  // Calculate visitors, advances, and exact dropoffs per stage
+  const stepMetrics: FunnelStepMetric[] = FUNNEL_STAGES.map((stage) => {
+    const k = stage.number;
+    let visitors = 0;
+    let advances = 0;
+    let dropoffs = 0;
+
+    sessionMaxStep.forEach((maxStep) => {
+      if (maxStep >= k) {
+        visitors++;
+      }
+      if (maxStep > k) {
+        advances++;
+      }
+      if (maxStep === k && k < FUNNEL_STAGES.length) {
+        dropoffs++;
       }
     });
-    return count;
-  });
 
-  const baseVisitors = countsPerStage[0] || totalSessions || 1;
+    const dropoffRate = visitors > 0 && k < FUNNEL_STAGES.length ? Math.round((dropoffs / visitors) * 100) : 0;
+    const advanceRate = visitors > 0 ? Math.round((advances / visitors) * 100) : 0;
+    const conversionRate = totalSessions > 0 ? Math.round((visitors / totalSessions) * 100) : 0;
 
-  const stepMetrics: FunnelStepMetric[] = FUNNEL_STAGES.map((stage, idx) => {
-    const visitors = countsPerStage[idx];
-    const nextVisitors = idx < countsPerStage.length - 1 ? countsPerStage[idx + 1] : visitors;
-    const dropoffs = Math.max(0, visitors - nextVisitors);
-    const dropoffRate = visitors > 0 ? Math.round((dropoffs / visitors) * 100) : 0;
-    const conversionRate = Math.round((visitors / baseVisitors) * 100);
+    let status: "great" | "warning" | "danger" | "checkout" = "great";
+    if (k === FUNNEL_STAGES.length) {
+      status = "checkout";
+    } else if (dropoffRate >= 35) {
+      status = "danger";
+    } else if (dropoffRate >= 15) {
+      status = "warning";
+    }
 
     return {
       stepKey: stage.key,
       label: stage.label,
       stepNumber: stage.number,
       visitors,
+      advances: k === FUNNEL_STAGES.length ? visitors : advances,
       dropoffs,
       dropoffRate,
+      advanceRate,
       conversionRate,
+      status,
     };
   });
 
-  const totalCheckouts = countsPerStage[countsPerStage.length - 1] || 0;
-  // Completed quiz = reached analyzing or offer step (index 5 or 6)
-  const finishedQuiz = countsPerStage[5] || countsPerStage[6] || 0;
+  const totalCheckouts = stepMetrics[stepMetrics.length - 1]?.visitors || 0;
+  // Completed quiz = reached analyzing or offer step (step 6 or 7)
+  const finishedQuiz = stepMetrics[5]?.visitors || 0;
 
   return {
     totalVisitors: totalSessions,
